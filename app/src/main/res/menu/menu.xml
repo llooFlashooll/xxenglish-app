@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/articleFragment"
+        android:icon="@drawable/ic_baseline_article_24"
+        android:title="文章" />
+    <item
+        android:id="@+id/videoFragment"
+        android:icon="@drawable/ic_baseline_slow_motion_video_24"
+        android:title="视频" />
+    <item
+        android:id="@+id/classFragment"
+        android:icon="@drawable/ic_baseline_class_24"
+        android:title="课堂" />
+    <item
+        android:id="@+id/myFragment"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="我的" />
+</menu>
