@@ -13,24 +13,21 @@ import com.example.xixienglish_app.R;
 /**
  * article partition fragment内部最基本的单元
  */
-public class ArticleItemFragment extends Fragment {
-
-
-
-    public ArticleItemFragment() {
-        // Required empty public constructor
-    }
-
+public class ArticleItemFragment extends BaseFragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int initLayout() {
+        return R.layout.fragment_article_item;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_article_item, container, false);
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+
     }
 }

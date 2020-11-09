@@ -14,24 +14,21 @@ import android.view.ViewGroup;
 
 import com.example.xixienglish_app.R;
 
-public class ClassFragment extends Fragment {
+public class ClassFragment extends BaseFragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int initLayout() {
+        return R.layout.class_fragment;
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.class_fragment, container, false);
+    protected void initView() {
+
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void initData() {
 
     }
-
 }

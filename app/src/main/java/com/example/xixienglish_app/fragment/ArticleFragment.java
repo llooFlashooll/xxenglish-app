@@ -23,32 +23,28 @@ import com.example.xixienglish_app.databinding.ArticleFragmentBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.xuexiang.xui.widget.tabbar.EasyIndicator;
 
-public class ArticleFragment extends Fragment {
+public class ArticleFragment extends BaseFragment {
 
     private ViewPager pager;
     private TabLayout tabLayout;
     private ArticleFragmentPagerAdapter pagerAdapter;
 
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int initLayout() {
+        return R.layout.article_fragment;
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.article_fragment, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        // 获取控件
-        pager = view.findViewById(R.id.view_pager);
-        tabLayout = view.findViewById(R.id.tablayout);
+    protected void initView() {
+        pager = mRootView.findViewById(R.id.view_pager);
+        tabLayout = mRootView.findViewById(R.id.tablayout);
         pagerAdapter = new ArticleFragmentPagerAdapter(getChildFragmentManager());
+    }
 
+    @Override
+    protected void initData() {
         // tab绑定viewpager，实现tab切换触发fragment切换
         tabLayout.setupWithViewPager(pager);
 
@@ -62,8 +58,6 @@ public class ArticleFragment extends Fragment {
 
         // 注意setAdaper后pagerAdapter就不能被改变了，因此要先addFrag后setAdapter
         pager.setAdapter(pagerAdapter);
-
-
     }
 
 

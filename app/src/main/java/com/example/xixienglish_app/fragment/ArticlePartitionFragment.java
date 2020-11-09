@@ -18,30 +18,23 @@ import com.example.xixienglish_app.adapter.ArticleFragmentItemAdapter;
 /**
  * Article页面下具体的某一tag，比如商业/科技/体育
  */
-public class ArticlePartitionFragment extends Fragment {
+public class ArticlePartitionFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
 
-    public ArticlePartitionFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int initLayout() {
+        return R.layout.fragment_article_partition;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_article_partition, container, false);
+    protected void initView() {
+        recyclerView= mRootView.findViewById(R.id.rv);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        recyclerView= view.findViewById(R.id.rv);
+    protected void initData() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new ArticleFragmentItemAdapter(getActivity()));
     }
