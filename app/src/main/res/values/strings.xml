@@ -2,4 +2,20 @@
     <string name="app_name">西西英语</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="tip_please_input_account">请输入账号</string>
+    <string name="tip_please_input_email">请输入邮箱</string>
+    <string name="tip_account_error">无效的账号!</string>
+    <string name="tip_email_error">无效的邮箱!</string>
+    <string name="title_account">账号</string>
+    <string name="title_email">邮箱</string>
+    <string name="regex_phone_number">^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(16[6])|(17[0,1,3,5-8])|(18[0-9])|(19[8,9]))\\d{8}$</string>
+
+    <string name="hint_please_input_password">请输入密码</string>
+    <string name="hint_please_input_code">请输入验证码</string>
+    <string name="tip_verify_password_error">请正确输入密码</string>
+    <string name="tip_verify_code_error">请正确输入密码</string>
+    <string name="lab_verify_code">验证码</string>
+    <string name="regex_verify_code">^\\d{4}$</string>
+    <string name="action_get_verify_code">获取验证码</string>
 </resources>

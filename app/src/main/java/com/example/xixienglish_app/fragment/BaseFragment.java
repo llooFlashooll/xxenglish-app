@@ -1,5 +1,6 @@
 package com.example.xixienglish_app.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -57,7 +58,10 @@ public abstract class BaseFragment extends Fragment {
      */
     protected abstract void initData();
 
-
+    public void navigateTo(Class cls) {
+        Intent in = new Intent(getActivity(), cls);
+        startActivity(in);
+    }
 
 
 }
