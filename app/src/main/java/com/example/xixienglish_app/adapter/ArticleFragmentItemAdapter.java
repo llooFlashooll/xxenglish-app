@@ -51,9 +51,10 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
             throw new RuntimeException("postion越界");
         ArticleEntity e = list.get(position);
         holder.title.setText(e.getTitle());
-        holder.content.setText(e.getContent());
+        holder.summary.setText(e.getSummary());
         holder.likes.setText(String.valueOf(e.getLikes()));
-        holder.reviews.setText(String.valueOf(e.getReviews()));
+        holder.comment.setText(String.valueOf(e.getComment()));
+        holder.read.setText(String.valueOf(e.getRead()));
         Picasso.get().load(e.getImage()).into(holder.image);
     }
 
@@ -63,18 +64,20 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView title;
-        private TextView content;
-        private TextView likes;
-        private TextView reviews;
-        private ImageView image;
+      private TextView title;
+      private TextView summary;
+      private TextView likes;
+      private TextView comment;
+      private ImageView image;
+      private TextView read;
         public ViewHolder(View v){
             super(v);
             title = v.findViewById(R.id.title);
-            content = v.findViewById(R.id.content);
+            summary = v.findViewById(R.id.summary);
             likes = v.findViewById(R.id.likes);
-            reviews = v.findViewById(R.id.reviews);
             image = v.findViewById(R.id.image);
+            comment = v.findViewById(R.id.comment);
+            read = v.findViewById(R.id.read);
         }
     }
 }
