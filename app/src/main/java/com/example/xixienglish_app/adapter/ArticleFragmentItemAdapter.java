@@ -54,7 +54,8 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
         holder.summary.setText(e.getSummary());
         holder.likes.setText(String.valueOf(e.getLikes()));
         holder.comment.setText(String.valueOf(e.getComment()));
-        holder.read.setText(String.valueOf(e.getRead()));
+        holder.read.setText("阅读量: " + String.valueOf(e.getRead()));
+        holder.tag.setText(e.getTag());
         Picasso.get().load(e.getImage()).into(holder.image);
     }
 
@@ -70,6 +71,7 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
       private TextView comment;
       private ImageView image;
       private TextView read;
+      private TextView tag;
         public ViewHolder(View v){
             super(v);
             title = v.findViewById(R.id.title);
@@ -78,6 +80,7 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
             image = v.findViewById(R.id.image);
             comment = v.findViewById(R.id.comment);
             read = v.findViewById(R.id.read);
+            tag = v.findViewById(R.id.tag);
         }
     }
 }

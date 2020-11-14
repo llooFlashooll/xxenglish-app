@@ -7,6 +7,15 @@ public class ArticleEntity {
   private Integer comment = 15;
   private String summary = "拜登NB";
   private String read = "123";
+  private String tag = "商业";
+
+  public String getTag() {
+    return tag;
+  }
+
+  public void setTag(String tag) {
+    this.tag = tag;
+  }
 
   public String getTitle() {
     return title;
