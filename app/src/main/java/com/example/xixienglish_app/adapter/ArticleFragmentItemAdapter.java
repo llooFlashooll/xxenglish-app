@@ -35,7 +35,7 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
     public ArticleFragmentItemAdapter(Context context){
         this.context = context;
         list = new ArrayList<>();
-        for(int i = 0; i < 30; i++)
+        for(int i = 0; i < 10; i++)
             list.add(new ArticleEntity());
     }
 
