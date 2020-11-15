@@ -7,7 +7,7 @@
         <item>@drawable/ic_baseline_class_24</item>
         <item>@drawable/ic_baseline_home_24</item>
         <item>0</item>
-        <item>@drawable/ic_close</item>
+        <item>@drawable/icon_tabbar_logout</item>
     </array>
 
     <string-array name="menu_titles">

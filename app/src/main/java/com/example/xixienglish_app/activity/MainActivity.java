@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -28,6 +29,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.xuexiang.xui.utils.ResUtils;
 import com.xuexiang.xui.utils.ThemeUtils;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
+import com.xuexiang.xui.widget.guidview.GuideCaseQueue;
+import com.xuexiang.xui.widget.guidview.GuideCaseView;
 import com.yarolegovich.slidingrootnav.SlideGravity;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
@@ -106,20 +109,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
         }
     }
 
-    public boolean isMenuOpen() {
-        if (mSlidingRootNav != null) {
-            return mSlidingRootNav.isMenuOpened();
-        }
-        return false;
-    }
-
-    public boolean isMenuClosed() {
-        if (mSlidingRootNav != null) {
-            return mSlidingRootNav.isMenuClosed();
-        }
-        return false;
-    }
-
     // 初始化侧滑栏列表项信息
     private DrawerItem createItemFor(int position) {
         return new SimpleDrawerItemAdapter(mMenuIcons[position], mMenuTitles[position])
@@ -159,30 +148,19 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(mAdapter);
 
-        // closeMenu();
-        mLLMenu.setVisibility(View.GONE);
-
         mAdapter.setSelected(POS_ARTICLE);
         // 开启菜单初始显示功能
         mSlidingRootNav.setMenuLocked(false);
         mSlidingRootNav.getLayout().addDragStateListener(new DragStateListener() {
             @Override
             public void onDragStart() {
-                showToast("DragStart!");
 
             }
 
             @Override
             public void onDragEnd(boolean isMenuOpened) {
-                showToast("DragEnd!");
-/*                if (isMenuOpen()){
-                    mLLMenu.setVisibility(View.VISIBLE);
-                }
-                else if (isMenuClosed()) {
-                    mLLMenu.setVisibility(View.GONE);
-                }*/
-                // 迷惑??
-/*                if (isMenuOpened) {
+                // 调用库，初始化动画 —— 控件教学，可改***
+                if (isMenuOpened) {
                     if (!GuideCaseView.isShowOnce(MainActivity.this, getString(R.string.guide_key_sliding_root_navigation))) {
                         final GuideCaseView guideStep1 = new GuideCaseView.Builder(MainActivity.this)
                                 .title("点击进入，可切换主题样式~")
@@ -202,7 +180,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
                                 .show();
                         GuideCaseView.setShowOnce(MainActivity.this, getString(R.string.guide_key_sliding_root_navigation));
                     }
-                }*/
+                }
             }
         });
     }
@@ -215,13 +193,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
             case POS_VIDEO:
             case POS_CLASS:
             case POS_HOME:
-/*                if (mTabLayout != null) {
-                    TabLayout.Tab tab = mTabLayout.getTabAt(position);
-                    if (tab != null) {
-                        tab.select();
-                    }
-                }*/
-                showToast("Test");
                 closeMenu();
                 break;
             case POS_LOGOUT:
@@ -231,7 +202,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
                         "是",
                         (dialog, which) -> {
                             dialog.dismiss();
-//                            TokenUtils.handleLogoutSuccess();
                             finish();
                         },
                         "否",
