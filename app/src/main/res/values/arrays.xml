@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="menu_icons">
+        <item>@drawable/ic_baseline_article_24</item>
+        <item>@drawable/ic_baseline_slow_motion_video_24</item>
+        <item>@drawable/ic_baseline_class_24</item>
+        <item>@drawable/ic_baseline_home_24</item>
+        <item>0</item>
+        <item>@drawable/ic_close</item>
+    </array>
+
+    <string-array name="menu_titles">
+        <item>文章</item>
+        <item>视频</item>
+        <item>课堂</item>
+        <item>我的</item>
+        <item>退出</item>
+    </string-array>
+
+</resources>

@@ -13,10 +13,12 @@ import com.xuexiang.xui.widget.toast.XToast;
 public abstract class BaseActivity extends AppCompatActivity {
 
     public Context mContext;
+    public Bundle mSavedInstanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSavedInstanceState = savedInstanceState;
         mContext = this;
         setContentView(initLayout());
         initView();
