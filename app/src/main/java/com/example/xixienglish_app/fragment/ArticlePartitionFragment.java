@@ -29,18 +29,17 @@ public class ArticlePartitionFragment extends BaseFragment {
     @Override
     protected void initData() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new ArticleFragmentItemAdapter(getActivity()));
-
-
+        recyclerView.setAdapter(new ArticleFragmentItemAdapter(getActivity(), this));
         // 下拉刷新
         refreshLayout.setOnRefreshListener(layout ->{
-          recyclerView.setAdapter(new ArticleFragmentItemAdapter(getActivity()));
+          recyclerView.setAdapter(new ArticleFragmentItemAdapter(getActivity(), this));
           layout.finishRefresh();
         });
         // 上拉加载
         refreshLayout.setOnLoadMoreListener(layout->{
-          recyclerView.setAdapter(new ArticleFragmentItemAdapter(getActivity()));
+          recyclerView.setAdapter(new ArticleFragmentItemAdapter(getActivity(), this));
           layout.finishLoadMore();
         });
+
     }
 }

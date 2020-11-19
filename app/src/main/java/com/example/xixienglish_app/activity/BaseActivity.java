@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.xuexiang.xui.widget.toast.XToast;
 
+import java.util.Map;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     public Context mContext;
@@ -56,6 +58,28 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void navigateTo(Class cls) {
         Intent in = new Intent(mContext, cls);
         startActivity(in);
+    }
+
+    /**
+     * 带有参数的activity跳转，由于activity之间通信
+     * @param cls
+     * @param hash
+     */
+    public void navigateToWithParams(Class cls, Map<String, String> hash){
+      Intent in = new Intent(mContext, cls);
+      for(Map.Entry<String, String> cur : hash.entrySet())
+        in.putExtra(cur.getKey(), cur.getValue());
+      startActivity(in);
+    }
+
+  /**
+   * 根据key获取导航传递过来的value
+   * @param key
+   * @return
+   */
+  public String getNavigationParams(String key){
+      Intent intent = getIntent();
+      return intent.getStringExtra(key);
     }
 
     // 清除先前已跳转页面

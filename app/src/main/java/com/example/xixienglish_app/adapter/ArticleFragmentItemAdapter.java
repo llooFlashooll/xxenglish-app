@@ -1,23 +1,27 @@
 package com.example.xixienglish_app.adapter;
 
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.xixienglish_app.R;
+import com.example.xixienglish_app.activity.ArticleDetailActivity;
+import com.example.xixienglish_app.activity.BaseActivity;
 import com.example.xixienglish_app.entity.ArticleEntity;
-import com.example.xixienglish_app.fragment.ArticleFragment;
+import com.example.xixienglish_app.fragment.BaseFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Article fragment某一头部分页下列表中的基本单元项
@@ -26,17 +30,26 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
 
     private Context context;
     private List<ArticleEntity> list;
+    private BaseFragment parent;
 
-    public ArticleFragmentItemAdapter(Context context, List<ArticleEntity> list){
+  /**
+   *
+   * @param context
+   * @param list 传入的列表项
+   * @param parent recyclerview所在的fragment，用于页面跳转
+   */
+    public ArticleFragmentItemAdapter(Context context, List<ArticleEntity> list, BaseFragment parent){
         this.context = context;
         this.list = list;
+        this.parent = parent;
     }
     // todo: 该构造器仅用于接入后端前测试，接入后删除
-    public ArticleFragmentItemAdapter(Context context){
+    public ArticleFragmentItemAdapter(Context context, BaseFragment parent){
         this.context = context;
         list = new ArrayList<>();
         for(int i = 0; i < 10; i++)
             list.add(new ArticleEntity());
+        this.parent = parent;
     }
 
     @NonNull
@@ -57,6 +70,16 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
         holder.read.setText("阅读量: " + String.valueOf(e.getRead()));
         holder.tag.setText(e.getTag());
         Picasso.get().load(e.getImage()).into(holder.image);
+
+        holder.wrapper.setOnClickListener(v->{
+          Map<String, String> hash = new HashMap<>();
+          hash.put("title", e.getTitle());
+          hash.put("image", e.getImage());
+          hash.put("content", e.getSummary());
+          // todo: content需要发送http请求得到,暂时用summary代替content
+          BaseActivity activity = (BaseActivity) parent.getActivity();
+          activity.navigateToWithParams(ArticleDetailActivity.class, hash);
+        });
     }
 
     @Override
@@ -72,6 +95,7 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
       private ImageView image;
       private TextView read;
       private TextView tag;
+      private LinearLayout wrapper;
         public ViewHolder(View v){
             super(v);
             title = v.findViewById(R.id.title);
@@ -81,6 +105,7 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
             comment = v.findViewById(R.id.comment);
             read = v.findViewById(R.id.read);
             tag = v.findViewById(R.id.tag);
+            wrapper = v.findViewById(R.id.wrapper);
         }
     }
 }
