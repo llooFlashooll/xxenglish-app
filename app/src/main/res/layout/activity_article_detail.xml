@@ -6,75 +6,120 @@
     android:layout_height="match_parent"
     tools:context=".activity.ArticleDetailActivity"
     android:orientation="vertical">
-  <LinearLayout
+  <ScrollView
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="12"
-    android:orientation="vertical"
-    android:id="@+id/article_detail">
-    <TextView
+    android:layout_weight="12">
+    <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/title"
-      android:text="title"
-      android:textSize="45dp"
-      android:gravity="center"/>
-    <View
-      android:layout_width="match_parent"
-      android:layout_height="0.5dp"
-      android:background="@android:color/darker_gray"
-      android:layout_marginTop="20dp"
-      android:layout_marginBottom="20dp"/>
-    <ImageView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:src="@mipmap/article_image"
-      android:id="@+id/image"/>
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/content"
-      android:text="zhengwenzhengwenzhengwen"
-      android:textSize="24dp"/>
-  </LinearLayout>
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:id="@+id/article_detail">
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:id="@+id/title"
+        android:text="title"
+        android:textColor="#000000"
+        android:textSize="32dp"
+        android:gravity="center"/>
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="24dp"/>
+      <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:src="@mipmap/article_image"
+        android:id="@+id/image"/>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/content"
+        android:text="zhengwenzhengwenzhengwen"
+        android:textSize="18dp"
+        android:textColor="#454545"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginHorizontal="24dp"/>
+    </LinearLayout>
+  </ScrollView>
+
 
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:orientation="horizontal"
-    android:layout_weight="1">
+    android:layout_weight="1"
+    android:background="#ffffff"
+    android:paddingTop="7dp"
+    android:paddingBottom="7dp">
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="24dp"
+          android:src="@drawable/colorful_praise" />
+        <Button
+          android:id="@+id/btn_like"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="点赞"
+          android:textSize="16dp"
+          android:layout_gravity="center"/>
 
-    <Button
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="match_parent"
-      android:text="点赞"
-      android:textSize="21dp"
-      android:id="@+id/btn_like"
-      android:drawableTop="@drawable/ic_baseline_article_24" />
-    <View
-      android:layout_width="1dp"
-      android:layout_height="match_parent"
-      android:background="@android:color/darker_gray"/>
-    <Button
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="match_parent"
-      android:text="评论"
-      android:textSize="21dp"
-      android:id="@+id/btn_comment"
-      android:drawableTop="@drawable/ic_baseline_article_24"/>
-    <View
-      android:layout_width="1dp"
-      android:layout_height="match_parent"
-      android:background="@android:color/darker_gray"/>
-    <Button
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="match_parent"
-      android:text="收藏"
-      android:textSize="21dp"
-      android:id="@+id/btn_collect"
-      android:drawableTop="@drawable/ic_baseline_article_24"/>
+
+      </LinearLayout>
+      <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"/>
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="24dp"
+          android:src="@drawable/colorful_comment" />
+        <Button
+          android:id="@+id/btn_comment"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="评论"
+          android:textSize="16dp"
+          android:layout_gravity="center"/>
+
+
+      </LinearLayout>
+      <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"/>
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="24dp"
+          android:src="@drawable/colorful_collection" />
+        <Button
+          android:id="@+id/btn_collect"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="收藏"
+          android:textSize="16dp"
+          android:layout_gravity="center"/>
+    </LinearLayout>
   </LinearLayout>
 </LinearLayout>

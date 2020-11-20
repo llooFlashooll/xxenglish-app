@@ -50,7 +50,7 @@ public class ArticleDetailActivity extends BaseActivity {
     title.setText(getNavigationParams("title"));
     content.setText(getNavigationParams("content"));
     final Transformation transformation = new RoundedCornersTransformation(20, 10);
-    Picasso.get().load(getNavigationParams("image")).resize((int)(image.getWidth() * 0.8), 0)
+    Picasso.get().load(getNavigationParams("image")).resize((int)(image.getWidth()), 0)
       .transform(transformation).into(image);
   }
 }
