@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.ArticleDetailActivity"
     android:orientation="vertical">
-  <ScrollView
+  <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="12">
@@ -46,8 +46,28 @@
         android:textColor="#454545"
         android:fontFamily="sans-serif-condensed"
         android:layout_marginHorizontal="24dp"/>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="精彩评论"
+        android:textSize="17dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:textColor="#000000"/>
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="24dp"/>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv"/>
     </LinearLayout>
-  </ScrollView>
+  </androidx.core.widget.NestedScrollView>
 
 
   <LinearLayout

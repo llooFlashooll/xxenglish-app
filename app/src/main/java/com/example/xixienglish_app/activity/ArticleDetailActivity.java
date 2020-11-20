@@ -5,7 +5,13 @@ package com.example.xixienglish_app.activity;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.xixienglish_app.R;
+import com.example.xixienglish_app.adapter.ArticleFragmentItemAdapter;
+import com.example.xixienglish_app.adapter.CommentItemAdapter;
 import com.example.xixienglish_app.animation.CircleTransform;
 import com.example.xixienglish_app.animation.RoundedCornersTransformation;
 import com.squareup.picasso.Picasso;
@@ -23,6 +29,7 @@ public class ArticleDetailActivity extends BaseActivity {
   private TextView title;
   private TextView content;
   private ImageView image;
+  private RecyclerView recyclerView;
 
   @Override
   protected int initLayout() {
@@ -37,18 +44,21 @@ public class ArticleDetailActivity extends BaseActivity {
     title = findViewById(R.id.title);
     content = findViewById(R.id.content);
     image = findViewById(R.id.image);
+    recyclerView = findViewById(R.id.rv);
   }
 
   @Override
   protected void initData() {
-
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    recyclerView.setAdapter(new CommentItemAdapter(this));
+    title.setText(getNavigationParams("title"));
+    content.setText(getNavigationParams("content"));
   }
 
   @Override
   public void onWindowFocusChanged(boolean hasFocus) {
+    // 待WindowFocusChanged后才能够getWidth，因此图片加载没有写在initData中
     super.onWindowFocusChanged(hasFocus);
-    title.setText(getNavigationParams("title"));
-    content.setText(getNavigationParams("content"));
     final Transformation transformation = new RoundedCornersTransformation(20, 10);
     Picasso.get().load(getNavigationParams("image")).resize((int)(image.getWidth()), 0)
       .transform(transformation).into(image);
