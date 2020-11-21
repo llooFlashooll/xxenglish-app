@@ -11,8 +11,8 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
  */
 public class ArticlePartitionFragment extends BaseFragment {
 
-    private RecyclerView recyclerView;
-    private RefreshLayout refreshLayout;
+    protected RecyclerView recyclerView;
+    protected RefreshLayout refreshLayout;
 
 
     @Override

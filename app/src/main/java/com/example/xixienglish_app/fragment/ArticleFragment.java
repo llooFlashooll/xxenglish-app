@@ -27,7 +27,7 @@ public class ArticleFragment extends BaseFragment {
 
     private ViewPager pager;
     private TabLayout tabLayout;
-    private ArticleFragmentPagerAdapter pagerAdapter;
+    protected ArticleFragmentPagerAdapter pagerAdapter;
 
 
 
@@ -51,13 +51,18 @@ public class ArticleFragment extends BaseFragment {
         // 设置pager切换动画
         pager.setPageTransformer(true, new DepthPageTransformer());
 
-        // todo: 将手动的addFrag改为调api
-        pagerAdapter.addFrag(new ArticlePartitionFragment(), "Tab1");
-        pagerAdapter.addFrag(new ArticlePartitionFragment(), "Tab2");
-        pagerAdapter.addFrag(new ArticlePartitionFragment(), "Tab3");
+        addFragFromBackend();
 
         // 注意setAdaper后pagerAdapter就不能被改变了，因此要先addFrag后setAdapter
         pager.setAdapter(pagerAdapter);
+    }
+
+    // 将从后端请求过来的所有tag装载到ViewPager中
+    protected void addFragFromBackend(){
+      // todo: 将手动的addFrag改为调api
+      pagerAdapter.addFrag(new ArticlePartitionFragment(), "Tab1");
+      pagerAdapter.addFrag(new ArticlePartitionFragment(), "Tab2");
+      pagerAdapter.addFrag(new ArticlePartitionFragment(), "Tab3");
     }
 
 

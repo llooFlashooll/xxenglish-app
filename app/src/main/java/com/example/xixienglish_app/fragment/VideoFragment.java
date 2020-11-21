@@ -1,21 +1,13 @@
 package com.example.xixienglish_app.fragment;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.xixienglish_app.R;
 
-public class VideoFragment extends BaseFragment {
-
+/**
+ * 由于VideoFragment与ArticleFragment的分页方式完全相同，只是具体某一页填充的内容不同
+ * 因此直接令VideoFragment继承ArticleFragment
+ */
+public class VideoFragment extends ArticleFragment {
 
     @Override
     protected int initLayout() {
@@ -23,12 +15,10 @@ public class VideoFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView() {
-
-    }
-
-    @Override
-    protected void initData() {
-
+    protected void addFragFromBackend() {
+      pagerAdapter.addFrag(new VideoPartitionFragment(), "Tab1");
+      pagerAdapter.addFrag(new VideoPartitionFragment(), "Tab2");
+      pagerAdapter.addFrag(new VideoPartitionFragment(), "Tab3");
+      pagerAdapter.addFrag(new VideoPartitionFragment(), "Tab4");
     }
 }

@@ -4,6 +4,7 @@ package com.example.xixienglish_app.activity;
 
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ public class ArticleDetailActivity extends BaseActivity {
   private TextView content;
   private ImageView image;
   private RecyclerView recyclerView;
+  private LinearLayout back;
 
   @Override
   protected int initLayout() {
@@ -45,6 +47,7 @@ public class ArticleDetailActivity extends BaseActivity {
     content = findViewById(R.id.content);
     image = findViewById(R.id.image);
     recyclerView = findViewById(R.id.rv);
+    back = findViewById(R.id.back);
   }
 
   @Override
@@ -53,6 +56,9 @@ public class ArticleDetailActivity extends BaseActivity {
     recyclerView.setAdapter(new CommentItemAdapter(this));
     title.setText(getNavigationParams("title"));
     content.setText(getNavigationParams("content"));
+
+    // 回退键
+    back.setOnClickListener(V -> this.finish());
   }
 
   @Override
