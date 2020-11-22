@@ -19,41 +19,31 @@
       android:layout_width="match_parent"
       android:layout_height="42dp"
       android:orientation="horizontal">
-
-
-      <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="11dp">
-
-        <TextView
-          android:id="@+id/title"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentTop="true"
-          android:text="韭菜盒子新做法，不发面不烫面"
-          android:textColor="#242424"
-          android:textSize="14sp" />
-
-
-
-      </RelativeLayout>
-
+      <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="视频标题"
+        android:textColor="#242424"
+        android:textSize="18dp" />
     </LinearLayout>
     <!--        视频播放器-->
     <FrameLayout
       android:id="@+id/player_container"
       android:layout_width="match_parent"
       android:layout_height="187dp"
-      android:layout_marginTop="8dp"
-      android:background="@android:color/black"
-      app:layout_constraintDimensionRatio="16:9"
-      app:layout_constraintTop_toTopOf="parent">
+      android:layout_marginTop="8dp">
 
-      <VideoView
+      <ImageView
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:id="@+id/video_view"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/image"/>
+      <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:src="@drawable/colorful_play"/>
 
     </FrameLayout>
 
@@ -75,7 +65,7 @@
           android:src="@drawable/colorful_praise" />
 
         <TextView
-          android:id="@+id/comment"
+          android:id="@+id/likes"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginLeft="3dp"
@@ -98,7 +88,7 @@
           android:src="@drawable/colorful_comment" />
 
         <TextView
-          android:id="@+id/collect"
+          android:id="@+id/comment"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginLeft="3dp"
@@ -122,11 +112,11 @@
           android:src="@drawable/colorful_collection" />
 
         <TextView
-          android:id="@+id/dz"
+          android:id="@+id/collect"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginLeft="3dp"
-          android:text="0"
+          android:text="收藏: 0"
           android:textColor="#161616"
           android:textSize="14sp" />
       </LinearLayout>

@@ -31,7 +31,7 @@ public class ArticleDetailActivity extends BaseActivity {
   private TextView content;
   private ImageView image;
   private RecyclerView recyclerView;
-  private LinearLayout back;
+  private ImageView back;
 
   @Override
   protected int initLayout() {

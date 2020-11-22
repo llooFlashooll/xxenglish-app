@@ -67,10 +67,9 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
         holder.summary.setText(e.getSummary());
         holder.likes.setText(String.valueOf(e.getLikes()));
         holder.comment.setText(String.valueOf(e.getComment()));
-        holder.read.setText("阅读量: " + String.valueOf(e.getRead()));
+        holder.read.setText("阅读量: " + e.getRead());
         holder.tag.setText(e.getTag());
         Picasso.get().load(e.getImage()).into(holder.image);
-
         holder.wrapper.setOnClickListener(v->{
           Map<String, String> hash = new HashMap<>();
           hash.put("title", e.getTitle());

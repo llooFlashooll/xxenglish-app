@@ -20,5 +20,14 @@
   <string name="action_get_verify_code">获取验证码</string>
 
   <string name="guide_key_sliding_root_navigation">guide_key_sliding_root_navigation</string>
+  <string name="title_activity_video">VideoActivity</string>
+  <!-- Strings used for fragments for navigation -->
+  <string name="first_fragment_label">First Fragment</string>
+  <string name="second_fragment_label">Second Fragment</string>
+  <string name="next">Next</string>
+  <string name="previous">Previous</string>
+
+  <string name="hello_first_fragment">Hello first fragment</string>
+  <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>

@@ -13,16 +13,16 @@
   android:layout_marginHorizontal="24dp"
   android:layout_marginTop="24dp"
   android:orientation="horizontal"
-  android:layout_gravity="center_vertical"
-  android:id="@+id/back">
+  android:layout_gravity="center_vertical">
   <ImageView
     android:layout_width="28dp"
-    android:layout_height="28dp"
-    android:layout_marginTop="4dp"
-    android:src="@drawable/icon_back2"/>
+    android:layout_height="match_parent"
+    android:src="@drawable/icon_back2"
+    android:id="@+id/back"/>
   <TextView
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center"
     android:text="back"
     android:textSize="24dp"
     android:layout_marginLeft="5dp"

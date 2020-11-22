@@ -1,12 +1,19 @@
 package com.example.xixienglish_app.fragment;
 
+import android.os.Bundle;
+import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.adapter.VideoFragmentItemAdapter;
+import com.example.xixienglish_app.animation.RoundedCornersTransformation;
 import com.example.xixienglish_app.entity.VideoEntity;
 
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 
 public class VideoPartitionFragment extends BaseFragment {
@@ -27,6 +34,7 @@ public class VideoPartitionFragment extends BaseFragment {
     refreshLayout = mRootView.findViewById(R.id.refreshLayout);
   }
 
+
   @Override
   protected void initData() {
     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -37,13 +45,14 @@ public class VideoPartitionFragment extends BaseFragment {
       recyclerView.setAdapter(new VideoFragmentItemAdapter(getActivity(), this));
       layout.finishRefresh();
     });
+
     // 上拉加载
     refreshLayout.setOnLoadMoreListener(layout->{
       recyclerView.setAdapter(new VideoFragmentItemAdapter(getActivity(), this));
       layout.finishLoadMore();
     });
-
   }
 
 
-}
+  }
+

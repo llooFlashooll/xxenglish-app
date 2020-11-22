@@ -1,27 +1,30 @@
 package com.example.xixienglish_app.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.xixienglish_app.R;
+import com.example.xixienglish_app.activity.BaseActivity;
+import com.example.xixienglish_app.activity.VideoDetailActivity;
+import com.example.xixienglish_app.animation.RoundedCornersTransformation;
 import com.example.xixienglish_app.entity.VideoEntity;
 import com.example.xixienglish_app.fragment.BaseFragment;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class VideoFragmentItemAdapter extends RecyclerView.Adapter<VideoFragmentItemAdapter.ViewHolder>{
@@ -60,15 +63,25 @@ public class VideoFragmentItemAdapter extends RecyclerView.Adapter<VideoFragment
     if(position < 0 || position >= list.size())
       throw new RuntimeException("postion越界");
     VideoEntity e = list.get(position);
-    Uri uri = Uri.parse(e.getUrl());
-    holder.videoView.setVideoURI(uri);
     holder.title.setText(e.getTitle());
+    holder.likes.setText("点赞: " + e.getLikes());
+    holder.comment.setText("评论: " + e.getComment());
+    holder.collect.setText("收藏: " + e.getCollection());
+    // 在fragment中获取组件width的方法如下所示，如果直接getWidth返回的是0
+    ViewTreeObserver vto = holder.image.getViewTreeObserver();
+    vto.addOnGlobalLayoutListener(()->{
+      final Transformation transformation = new RoundedCornersTransformation(20, 10);
+      Picasso.get().load(e.getImage()).resize(holder.image.getWidth(), 0)
+        .transform(transformation).into(holder.image);
+    });
     holder.wrapper.setOnClickListener(v->{
-      MediaController mediaController = new MediaController(parent.getActivity());
-      holder.videoView.setMediaController(mediaController);
-      holder.videoView.start();
+      BaseActivity activity = (BaseActivity)parent.getActivity();
+      Map<String, String> hash = new HashMap<>();
+      hash.put("url", e.getUrl());
+      activity.navigateToWithParams(VideoDetailActivity.class, hash);
     });
   }
+
 
   @Override
   public int getItemCount() {
@@ -77,13 +90,19 @@ public class VideoFragmentItemAdapter extends RecyclerView.Adapter<VideoFragment
 
   class ViewHolder extends RecyclerView.ViewHolder{
     private LinearLayout wrapper;
-    private VideoView videoView;
+    private ImageView image;
     private TextView title;
+    private TextView likes;
+    private TextView comment;
+    private TextView collect;
     public ViewHolder(View v){
       super(v);
       wrapper = v.findViewById(R.id.wrapper);
-      videoView = v.findViewById(R.id.video_view);
+      image = v.findViewById(R.id.image);
       title = v.findViewById(R.id.title);
+      likes = v.findViewById(R.id.likes);
+      comment = v.findViewById(R.id.comment);
+      collect = v.findViewById(R.id.collect);
     }
   }
 
