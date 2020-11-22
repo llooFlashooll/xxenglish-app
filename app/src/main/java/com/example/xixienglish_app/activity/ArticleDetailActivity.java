@@ -1,7 +1,6 @@
 package com.example.xixienglish_app.activity;
 
 
-
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;

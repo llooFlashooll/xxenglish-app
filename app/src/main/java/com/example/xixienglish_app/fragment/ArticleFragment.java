@@ -1,33 +1,26 @@
 package com.example.xixienglish_app.fragment;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.alibaba.fastjson.*;
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.adapter.ArticleFragmentPagerAdapter;
 import com.example.xixienglish_app.animation.DepthPageTransformer;
-import com.example.xixienglish_app.databinding.ArticleFragmentBinding;
+import com.example.xixienglish_app.api.Api;
+import com.example.xixienglish_app.api.HttpCallBack;
+import com.example.xixienglish_app.entity.ArticleEntity;
+import com.example.xixienglish_app.entity.ArticleEntitySet;
 import com.google.android.material.tabs.TabLayout;
-import com.xuexiang.xui.widget.tabbar.EasyIndicator;
+import java.util.HashMap;
+import java.util.List;
 
 public class ArticleFragment extends BaseFragment {
 
     private ViewPager pager;
     private TabLayout tabLayout;
     protected ArticleFragmentPagerAdapter pagerAdapter;
+    // 用来实现请求完成之后再设置adapter的锁
+    private boolean hasLoaded = false;
 
 
 
@@ -44,7 +37,7 @@ public class ArticleFragment extends BaseFragment {
     }
 
     @Override
-    protected void initData() {
+    protected void initData()  {
         // tab绑定viewpager，实现tab切换触发fragment切换
         tabLayout.setupWithViewPager(pager);
 
@@ -54,15 +47,29 @@ public class ArticleFragment extends BaseFragment {
         addFragFromBackend();
 
         // 注意setAdaper后pagerAdapter就不能被改变了，因此要先addFrag后setAdapter
+        while (!hasLoaded){}
         pager.setAdapter(pagerAdapter);
     }
 
     // 将从后端请求过来的所有tag装载到ViewPager中
     protected void addFragFromBackend(){
-      // todo: 将手动的addFrag改为调api
-      pagerAdapter.addFrag(new ArticlePartitionFragment(), "Tab1");
-      pagerAdapter.addFrag(new ArticlePartitionFragment(), "Tab2");
-      pagerAdapter.addFrag(new ArticlePartitionFragment(), "Tab3");
+      HashMap<String, Object> hash = new HashMap<>();
+      // 初始请求第一页的数据
+      hash.put("pageId", 1);
+      Api.config("/noTagNews", hash).getRequest(getActivity(), new HttpCallBack() {
+        @Override
+        public void onSuccess(String res) {
+          List<ArticleEntitySet> fragArticles = JSON.parseArray(res, ArticleEntitySet.class);
+          for(ArticleEntitySet cur : fragArticles)
+            pagerAdapter.addFrag(new ArticlePartitionFragment(cur), cur.getTag());
+          hasLoaded = true;
+        }
+
+        @Override
+        public void onFailure(Exception e) {
+          e.printStackTrace();
+        }
+      });
     }
 
 

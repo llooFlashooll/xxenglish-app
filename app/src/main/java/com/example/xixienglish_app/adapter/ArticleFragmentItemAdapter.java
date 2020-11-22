@@ -11,9 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.activity.ArticleDetailActivity;
 import com.example.xixienglish_app.activity.BaseActivity;
+import com.example.xixienglish_app.api.Api;
+import com.example.xixienglish_app.api.HttpCallBack;
 import com.example.xixienglish_app.entity.ArticleEntity;
 import com.example.xixienglish_app.fragment.BaseFragment;
 import com.squareup.picasso.Picasso;
@@ -43,14 +46,6 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
         this.list = list;
         this.parent = parent;
     }
-    // todo: 该构造器仅用于接入后端前测试，接入后删除
-    public ArticleFragmentItemAdapter(Context context, BaseFragment parent){
-        this.context = context;
-        list = new ArrayList<>();
-        for(int i = 0; i < 10; i++)
-            list.add(new ArticleEntity());
-        this.parent = parent;
-    }
 
     @NonNull
     @Override
@@ -71,13 +66,26 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
         holder.tag.setText(e.getTag());
         Picasso.get().load(e.getImage()).into(holder.image);
         holder.wrapper.setOnClickListener(v->{
-          Map<String, String> hash = new HashMap<>();
-          hash.put("title", e.getTitle());
-          hash.put("image", e.getImage());
-          hash.put("content", e.getSummary());
-          // todo: content需要发送http请求得到,暂时用summary代替content
-          BaseActivity activity = (BaseActivity) parent.getActivity();
-          activity.navigateToWithParams(ArticleDetailActivity.class, hash);
+          HashMap<String, Object> params = new HashMap<String, Object>(){{put("newsId", e.getNewsId());}};
+          Api.config("/news/specific", params).getRequest(parent.getActivity(), new HttpCallBack() {
+            @Override
+            public void onSuccess(String res) {
+              ArticleEntity specifcArticle = JSON.parseObject(res, ArticleEntity.class);
+              Map<String, String> hash = new HashMap<>();
+              hash.put("title", specifcArticle.getTitle());
+              hash.put("image", specifcArticle.getImage());
+              hash.put("content", specifcArticle.getSummary());
+              hash.put("content", specifcArticle.getContent());
+              BaseActivity activity = (BaseActivity) parent.getActivity();
+              activity.navigateToWithParams(ArticleDetailActivity.class, hash);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+          });
+
         });
     }
 

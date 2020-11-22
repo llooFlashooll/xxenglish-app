@@ -86,9 +86,13 @@ dependencies {
     // 侧边栏菜单
     implementation 'com.yarolegovich:sliding-root-nav:1.1.0'
 
+  // 视频播放器
       implementation 'com.github.dueeeke.dkplayer:dkplayer-java:3.2.6'
       implementation 'com.github.dueeeke.dkplayer:dkplayer-ui:3.2.6'
       implementation 'com.github.dueeeke.dkplayer:player-exo:3.2.6'
       implementation 'com.github.dueeeke.dkplayer:player-ijk:3.2.6'
       implementation 'com.github.dueeeke.dkplayer:videocache:3.2.6'
+
+  // fastjson
+  implementation 'com.alibaba:fastjson:1.1.72.android'
 }
