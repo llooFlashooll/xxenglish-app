@@ -1,21 +1,28 @@
 package com.example.xixienglish_app.activity;
 
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
 import com.example.xixienglish_app.R;
-import com.example.xixienglish_app.adapter.ArticleFragmentItemAdapter;
 import com.example.xixienglish_app.adapter.CommentItemAdapter;
-import com.example.xixienglish_app.animation.CircleTransform;
 import com.example.xixienglish_app.animation.RoundedCornersTransformation;
+import com.example.xixienglish_app.api.Api;
+import com.example.xixienglish_app.api.HttpCallBack;
+import com.example.xixienglish_app.entity.CommentEntity;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
+
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -31,6 +38,24 @@ public class ArticleDetailActivity extends BaseActivity {
   private ImageView image;
   private RecyclerView recyclerView;
   private ImageView back;
+  private List<CommentEntity> commentEntityList;
+  private BaseActivity thisActivity = this;
+  public static final int SET_ADAPTER = 0x1;
+
+
+  /**
+   * http请求的线程中不能setAdapter，移到handler中做
+   */
+  private Handler handler = new Handler(Looper.getMainLooper()){
+    @Override
+    public void handleMessage(Message msg) {
+      switch (msg.what){
+        case SET_ADAPTER:
+          recyclerView.setAdapter(new CommentItemAdapter(thisActivity, commentEntityList));
+          break;
+      }
+    }
+  };
 
   @Override
   protected int initLayout() {
@@ -52,10 +77,10 @@ public class ArticleDetailActivity extends BaseActivity {
   @Override
   protected void initData() {
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    recyclerView.setAdapter(new CommentItemAdapter(this));
+    // 从后端请求评论列表
+    getCommentList();
     title.setText(getNavigationParams("title"));
     content.setText(getNavigationParams("content"));
-
     // 回退键
     back.setOnClickListener(V -> this.finish());
   }
@@ -68,4 +93,24 @@ public class ArticleDetailActivity extends BaseActivity {
     Picasso.get().load(getNavigationParams("image")).resize((int)(image.getWidth()), 0)
       .transform(transformation).into(image);
   }
+
+
+  private void getCommentList(){
+    HashMap<String, Object> params = new HashMap<>();
+    params.put("newsId", getNavigationParams("newsId"));
+    Api.config("/review/root", params).getRequest(this, new HttpCallBack() {
+      @Override
+      public void onSuccess(String res) {
+        commentEntityList = JSON.parseArray(res, CommentEntity.class);
+        Message msg = new Message();
+        msg.what = SET_ADAPTER;
+        handler.sendMessage(msg);
+      }
+      @Override
+      public void onFailure(Exception e) {
+        e.printStackTrace();
+      }
+    });
+  }
+
 }

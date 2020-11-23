@@ -38,13 +38,6 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.
     this.list = list;
   }
 
-  // todo: 该构造器仅用于接入后端前测试，接入后删除
-  public CommentItemAdapter(Context context){
-    this.context = context;
-    list = new ArrayList<>();
-    for(int i = 0; i < 10; i++)
-      list.add(new CommentEntity());
-  }
 
   @NonNull
   @Override
@@ -57,8 +50,8 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.
     if(position < 0 || position >= list.size())
       throw new RuntimeException("postion越界");
     CommentEntity e = list.get(position);
-    holder.username.setText(e.getUsername());
-    holder.commentContent.setText(e.getCommentContent());
+    holder.username.setText(e.getName());
+    holder.commentContent.setText(e.getContent());
   }
 
   @Override

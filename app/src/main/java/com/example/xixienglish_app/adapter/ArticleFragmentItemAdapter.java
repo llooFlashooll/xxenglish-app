@@ -62,7 +62,7 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
         holder.summary.setText(e.getSummary());
         holder.likes.setText(String.valueOf(e.getLikes()));
         holder.comment.setText(String.valueOf(e.getComment()));
-        holder.read.setText("阅读量: " + e.getRead());
+        holder.read.setText("阅读量: " + position);
         holder.tag.setText(e.getTag());
         Picasso.get().load(e.getImage()).into(holder.image);
         holder.wrapper.setOnClickListener(v->{
@@ -74,8 +74,8 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
               Map<String, String> hash = new HashMap<>();
               hash.put("title", specifcArticle.getTitle());
               hash.put("image", specifcArticle.getImage());
-              hash.put("content", specifcArticle.getSummary());
               hash.put("content", specifcArticle.getContent());
+              hash.put("newsId", specifcArticle.getNewsId());
               BaseActivity activity = (BaseActivity) parent.getActivity();
               activity.navigateToWithParams(ArticleDetailActivity.class, hash);
             }

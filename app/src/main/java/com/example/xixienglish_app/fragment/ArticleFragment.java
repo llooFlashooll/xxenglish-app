@@ -1,10 +1,15 @@
 package com.example.xixienglish_app.fragment;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+
 import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.fastjson.*;
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.adapter.ArticleFragmentPagerAdapter;
+import com.example.xixienglish_app.adapter.CommentItemAdapter;
 import com.example.xixienglish_app.animation.DepthPageTransformer;
 import com.example.xixienglish_app.api.Api;
 import com.example.xixienglish_app.api.HttpCallBack;
@@ -19,8 +24,22 @@ public class ArticleFragment extends BaseFragment {
     private ViewPager pager;
     private TabLayout tabLayout;
     protected ArticleFragmentPagerAdapter pagerAdapter;
-    // 用来实现请求完成之后再设置adapter的锁
-    private boolean hasLoaded = false;
+    public static final int SET_ADAPTER = 0x1;
+
+
+    /**
+     * http请求的线程中不能setAdapter，移到handler中做
+     */
+    private Handler handler = new Handler(Looper.getMainLooper()){
+      @Override
+      public void handleMessage(Message msg) {
+        switch (msg.what){
+          case SET_ADAPTER:
+            pager.setAdapter(pagerAdapter);
+            break;
+        }
+      }
+    };
 
 
 
@@ -46,9 +65,6 @@ public class ArticleFragment extends BaseFragment {
 
         addFragFromBackend();
 
-        // 注意setAdaper后pagerAdapter就不能被改变了，因此要先addFrag后setAdapter
-        while (!hasLoaded){}
-        pager.setAdapter(pagerAdapter);
     }
 
     // 将从后端请求过来的所有tag装载到ViewPager中
@@ -62,7 +78,9 @@ public class ArticleFragment extends BaseFragment {
           List<ArticleEntitySet> fragArticles = JSON.parseArray(res, ArticleEntitySet.class);
           for(ArticleEntitySet cur : fragArticles)
             pagerAdapter.addFrag(new ArticlePartitionFragment(cur), cur.getTag());
-          hasLoaded = true;
+            Message msg = new Message();
+            msg.what = SET_ADAPTER;
+            handler.sendMessage(msg);
         }
 
         @Override

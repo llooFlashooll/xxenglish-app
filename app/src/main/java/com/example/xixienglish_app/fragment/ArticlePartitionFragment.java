@@ -1,11 +1,16 @@
 package com.example.xixienglish_app.fragment;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.adapter.ArticleFragmentItemAdapter;
+import com.example.xixienglish_app.adapter.CommentItemAdapter;
 import com.example.xixienglish_app.api.Api;
 import com.example.xixienglish_app.api.HttpCallBack;
 import com.example.xixienglish_app.entity.ArticleEntity;
@@ -24,8 +29,26 @@ public class ArticlePartitionFragment extends BaseFragment {
     protected RefreshLayout refreshLayout;
     private ArticleEntitySet articleEntitySet;
     private int curPageId = 1;
-    // 同步锁
-    boolean hasLoaded = false;
+    private BaseFragment thisFragment = this;
+    public static final int SET_ADAPTER = 0x1;
+    public static final int SET_ADAPTER_AND_SET_POS = 0x2;
+
+    /**
+     * http请求的线程中不能setAdapter，移到handler中做
+     */
+    private Handler handler = new Handler(Looper.getMainLooper()){
+      @Override
+      public void handleMessage(Message msg) {
+        switch (msg.what){
+          case SET_ADAPTER:
+            recyclerView.setAdapter(new ArticleFragmentItemAdapter(getActivity(), articleEntitySet.getNewsList(), thisFragment));
+            break;
+          case SET_ADAPTER_AND_SET_POS:
+            recyclerView.scrollToPosition((curPageId - 1) * 20);
+            recyclerView.setAdapter(new ArticleFragmentItemAdapter(getActivity(), articleEntitySet.getNewsList(), thisFragment));
+        }
+      }
+    };
 
     public  ArticlePartitionFragment(ArticleEntitySet articleEntitySet){
       this.articleEntitySet = articleEntitySet;
@@ -51,31 +74,12 @@ public class ArticlePartitionFragment extends BaseFragment {
           // 下拉刷新(即向上滑)
           refreshLayout.setOnRefreshListener(layout -> {
             loadArticleList(false);
-            while (!hasLoaded) {
-              try {
-                Thread.sleep(50);
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-            }
-            recyclerView.setAdapter(new ArticleFragmentItemAdapter(getActivity(), articleEntitySet.getNewsList(), this));
             layout.finishRefresh();
-            hasLoaded = false;
           });
           // 上拉加载(即向下滑)
           refreshLayout.setOnLoadMoreListener(layout -> {
             loadArticleList(true);
-            while (!hasLoaded) {
-              try {
-                Thread.sleep(50);
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-            }
-            recyclerView.setAdapter(new ArticleFragmentItemAdapter(getActivity(), articleEntitySet.getNewsList(), this));
-            recyclerView.scrollToPosition((curPageId - 1) * 20);
             layout.finishLoadMore();
-            hasLoaded = false;
           });
     }
 
@@ -96,7 +100,10 @@ public class ArticlePartitionFragment extends BaseFragment {
           if(!down) articleEntitySet.getNewsList().clear();
           for(ArticleEntity e : curArticles)
             articleEntitySet.getNewsList().add(e);
-          hasLoaded = true;
+          Message msg = new Message();
+          if(!down) msg.what = SET_ADAPTER;
+          else msg.what = SET_ADAPTER_AND_SET_POS;
+          handler.sendMessage(msg);
         }
         @Override
         public void onFailure(Exception e) {
@@ -104,4 +111,5 @@ public class ArticlePartitionFragment extends BaseFragment {
         }
       });
     }
+
 }

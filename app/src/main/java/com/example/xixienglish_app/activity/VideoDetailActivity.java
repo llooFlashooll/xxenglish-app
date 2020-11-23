@@ -39,7 +39,7 @@ public class VideoDetailActivity extends BaseActivity {
   @Override
   protected void initData() {
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    recyclerView.setAdapter(new CommentItemAdapter(this));
+//    recyclerView.setAdapter(new CommentItemAdapter(this));
 
     initVideoPlayer();
     videoView.setUrl(getNavigationParams("url"));
