@@ -44,14 +44,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void showToast(String msg) {
         XToast.info(mContext, msg).show();
-//        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
-    //子线程打印Toast,不报错
+    // 子线程打印Toast,不报错，但有问题！！Looper.Loop()调用子线程直接结束
     public void showToastSync(String msg) {
         Looper.prepare();
         XToast.info(mContext, msg).show();
-//        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         Looper.loop();
     }
 
@@ -72,14 +70,14 @@ public abstract class BaseActivity extends AppCompatActivity {
       startActivity(in);
     }
 
-  /**
-   * 根据key获取导航传递过来的value
-   * @param key
-   * @return
-   */
-  public String getNavigationParams(String key){
-      Intent intent = getIntent();
-      return intent.getStringExtra(key);
+    /**
+     * 根据key获取导航传递过来的value
+     * @param key
+     * @return
+     */
+    public String getNavigationParams(String key){
+        Intent intent = getIntent();
+        return intent.getStringExtra(key);
     }
 
     // 清除先前已跳转页面

@@ -1,17 +1,21 @@
 package com.example.xixienglish_app.activity;
 
 import android.content.Intent;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.api.Api;
 import com.example.xixienglish_app.api.ApiConfig;
 import com.example.xixienglish_app.api.HttpCallBack;
+import com.example.xixienglish_app.entity.ArticleEntitySet;
 import com.example.xixienglish_app.entity.LoginResponse;
+import com.example.xixienglish_app.fragment.ArticlePartitionFragment;
 import com.example.xixienglish_app.util.StringUtils;
 import com.google.gson.Gson;
 
@@ -19,6 +23,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -96,70 +101,29 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onSuccess(final String res) {
                 Log.e("onSuccess", res);
-                showToastSync(res);
 
-                // Gson库封装拿token
                 Gson gson = new Gson();
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
                 if (loginResponse.getCode() == 200) {
-                    String token = loginResponse.getData();
-                    showToastSync("token为:" + token);
-                    System.out.println("token为: " + token);
-                    // 应用sharedPreference存键值对
-                    insertVal("token", token);
-                    // 登陆成功跳转至首页
-//                    navigateTo(HomeActivity.class);
-                    navigateToWithFlags(MainActivity.class,
+                    Looper.prepare();
+                    showToast(loginResponse.getMsg());
+                    navigateToWithFlags(LoginActivity.class,
                             Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    showToastSync("登录成功");
+                    Looper.loop();
+
                 } else {
-                    showToastSync("登录失败");
+                    Looper.prepare();
+                    showToast(loginResponse.getMsg());
+                    showToast("请重新注册");
+//                    navigateToWithFlags(LoginActivity.class,
+//                            Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Looper.loop();
                 }
             }
 
             @Override
             public void onFailure(Exception e) {
 
-            }
-        });
-
-        //网络部分
-        //第一步创建OKHttpClient
-        OkHttpClient client = new OkHttpClient.Builder()
-                .build();
-        Map m = new HashMap();
-        m.put("account", account);
-        m.put("password", pwd);
-        JSONObject jsonObject = new JSONObject(m);
-        String jsonStr = jsonObject.toString();
-        RequestBody requestBodyJson =
-                RequestBody.create(MediaType.parse("application/json;charset=utf-8")
-                        , jsonStr);
-        //第三步创建Request
-        Request request = new Request.Builder()
-                .url("http://www.wasd003.cn:8888/register")
-                .addHeader("contentType", "application/json;charset=utf-8")
-                .post(requestBodyJson)
-                .build();
-        //第四步创建call回调对象
-        final Call call = client.newCall(request);
-        //第五步发起请求
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("onFailure", e.getMessage());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String result = response.body().string();
-                //不在主线程执行
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        showToast(result);
-                    }
-                });
             }
         });
     }

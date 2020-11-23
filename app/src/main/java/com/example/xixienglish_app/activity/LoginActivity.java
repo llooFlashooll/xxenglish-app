@@ -1,6 +1,7 @@
 package com.example.xixienglish_app.activity;
 
 import android.content.Intent;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -98,32 +99,28 @@ public class LoginActivity extends BaseActivity {
         params.put("account", account);
         params.put("password", pwd);
 
-        Log.e("account", account);
-        Log.e("password", pwd);
-
         Api.config(ApiConfig.LOGIN, params).postRequest(new HttpCallBack() {
 
             @Override
             public void onSuccess(final String res) {
                 Log.e("onSuccess", res);
-                showToastSync(res);
 
-                // Gson库封装拿token
                 Gson gson = new Gson();
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
                 if (loginResponse.getCode() == 200) {
+                    Looper.prepare();
+                    showToast("登陆成功");
                     String token = loginResponse.getData();
-                    showToastSync("token为:" + token);
-                    System.out.println("token为: " + token);
+                    Log.e("onSuccess", token);
                     // 应用sharedPreference存键值对
-                    insertVal("token", token);
-                    // 登陆成功跳转至首页
-//                    navigateTo(HomeActivity.class);
+//                    insertVal("token", token);
                     navigateToWithFlags(MainActivity.class,
                             Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    showToastSync("登录成功");
+                    Looper.loop();
                 } else {
-                    showToastSync("登录失败");
+                    Looper.prepare();
+                    showToast(loginResponse.getMsg());
+                    Looper.loop();
                 }
             }
 
