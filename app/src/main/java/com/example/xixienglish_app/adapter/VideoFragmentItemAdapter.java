@@ -57,17 +57,14 @@ public class VideoFragmentItemAdapter extends RecyclerView.Adapter<VideoFragment
     holder.likes.setText("点赞: " + e.getLikes());
     holder.comment.setText("评论: " + e.getComment());
     // todo: 为了便于调试暂时把收藏的部分写作页码，第3次迭代换回来
-//    holder.collect.setText("收藏: " + e.getCollection());
-
+    // holder.collect.setText("收藏: " + e.getCollection());
     holder.collect.setText("页码: " + position);
 
-    // 在fragment中获取组件width的方法如下所示，如果直接getWidth返回的是0
-    ViewTreeObserver vto = holder.image.getViewTreeObserver();
-    vto.addOnGlobalLayoutListener(()->{
-      final Transformation transformation = new RoundedCornersTransformation(20, 10);
-      Picasso.get().load(e.getImage()).resize(holder.image.getWidth(), 0)
-        .transform(transformation).into(holder.image);
-    });
+    final Transformation transformation = new RoundedCornersTransformation(20, 10);
+    // 设置宽度为无穷大，自动填充父结点
+    Picasso.get().load(e.getImage()).resize(1200, 0)
+      .transform(transformation).into(holder.image);
+
     holder.wrapper.setOnClickListener(v->{
       BaseActivity activity = (BaseActivity)parent.getActivity();
       Map<String, String> params = new HashMap<String, String>(){{put("content", e.getContent());}};
