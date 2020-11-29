@@ -45,7 +45,10 @@ public class VideoDetailActivity extends BaseActivity {
     videoView.setUrl(getNavigationParams("content"));
     videoView.start();
 
-    back.setOnClickListener(v -> this.finish());
+    back.setOnClickListener(v -> {
+      videoView.pause();
+      this.finish();
+    });
   }
 
 
