@@ -1,12 +1,40 @@
 package com.example.xixienglish_app.entity;
 
 public class VideoEntity {
-  private String title = "title";
-  private String image = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604833119244&di=d9e4955ad03e5c75ec8305ee62cf7853&imgtype=0&src=http%3A%2F%2Fy2.ifengimg.com%2Fcmpp%2F2014%2F04%2F24%2F08%2Fff58c12f-56f7-4818-84be-eca9dd5c8c94.jpg";
+  /**
+   * 视频标题
+   */
+  private String title;
+  /**
+   * 视频封面图
+   */
+  private String image;
+  /**
+   * 点赞
+   */
   private Integer likes = 10;
+  /**
+   * 评论
+   */
   private Integer comment = 15;
+  /**
+   * 收藏
+   */
   private Integer collection = 12;
-  private String url = "http://vfx.mtime.cn/Video/2019/03/14/mp4/190314223540373995.mp4";
+
+  /**
+   * 对于video，content表示视频的url
+   */
+  private String content = "https://wasd003-1304125386.cos.ap-shanghai.myqcloud.com/video/e4c91a08-d5e5-4d4f-8d58-f0e186c7686b.mp4";
+
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
 
   public String getTitle() {
     return title;
@@ -48,11 +76,4 @@ public class VideoEntity {
     this.collection = collection;
   }
 
-  public String getUrl() {
-    return url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
 }

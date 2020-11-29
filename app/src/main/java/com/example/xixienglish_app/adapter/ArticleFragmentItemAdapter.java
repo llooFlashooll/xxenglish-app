@@ -62,6 +62,7 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
         holder.summary.setText(e.getSummary());
         holder.likes.setText(String.valueOf(e.getLikes()));
         holder.comment.setText(String.valueOf(e.getComment()));
+        // todo： 为了便于调试暂时把阅读量写作页码，第3次迭代改回来
         holder.read.setText("阅读量: " + position);
         holder.tag.setText(e.getTag());
         Picasso.get().load(e.getImage()).into(holder.image);

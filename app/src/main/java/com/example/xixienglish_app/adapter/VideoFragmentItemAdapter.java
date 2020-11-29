@@ -20,8 +20,6 @@ import com.example.xixienglish_app.entity.VideoEntity;
 import com.example.xixienglish_app.fragment.BaseFragment;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,14 +41,6 @@ public class VideoFragmentItemAdapter extends RecyclerView.Adapter<VideoFragment
     this.list = list;
     this.parent = parent;
   }
-  // todo: 该构造器仅用于接入后端前测试，接入后删除
-  public VideoFragmentItemAdapter(Context context, BaseFragment parent){
-    this.context = context;
-    list = new ArrayList<>();
-    for(int i = 0; i < 2; i++)
-      list.add(new VideoEntity());
-    this.parent = parent;
-  }
 
   @NonNull
   @Override
@@ -66,7 +56,11 @@ public class VideoFragmentItemAdapter extends RecyclerView.Adapter<VideoFragment
     holder.title.setText(e.getTitle());
     holder.likes.setText("点赞: " + e.getLikes());
     holder.comment.setText("评论: " + e.getComment());
-    holder.collect.setText("收藏: " + e.getCollection());
+    // todo: 为了便于调试暂时把收藏的部分写作页码，第3次迭代换回来
+//    holder.collect.setText("收藏: " + e.getCollection());
+
+    holder.collect.setText("页码: " + position);
+
     // 在fragment中获取组件width的方法如下所示，如果直接getWidth返回的是0
     ViewTreeObserver vto = holder.image.getViewTreeObserver();
     vto.addOnGlobalLayoutListener(()->{
@@ -76,9 +70,8 @@ public class VideoFragmentItemAdapter extends RecyclerView.Adapter<VideoFragment
     });
     holder.wrapper.setOnClickListener(v->{
       BaseActivity activity = (BaseActivity)parent.getActivity();
-      Map<String, String> hash = new HashMap<>();
-      hash.put("url", e.getUrl());
-      activity.navigateToWithParams(VideoDetailActivity.class, hash);
+      Map<String, String> params = new HashMap<String, String>(){{put("content", e.getContent());}};
+      activity.navigateToWithParams(VideoDetailActivity.class, params);
     });
   }
 

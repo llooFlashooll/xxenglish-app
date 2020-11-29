@@ -42,7 +42,7 @@ public class VideoDetailActivity extends BaseActivity {
 //    recyclerView.setAdapter(new CommentItemAdapter(this));
 
     initVideoPlayer();
-    videoView.setUrl(getNavigationParams("url"));
+    videoView.setUrl(getNavigationParams("content"));
     videoView.start();
 
     back.setOnClickListener(v -> this.finish());

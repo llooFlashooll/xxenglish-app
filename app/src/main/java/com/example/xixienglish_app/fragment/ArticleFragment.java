@@ -8,12 +8,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.fastjson.*;
 import com.example.xixienglish_app.R;
-import com.example.xixienglish_app.adapter.ArticleFragmentPagerAdapter;
-import com.example.xixienglish_app.adapter.CommentItemAdapter;
+import com.example.xixienglish_app.adapter.FragmentPagerAdapter;
 import com.example.xixienglish_app.animation.DepthPageTransformer;
 import com.example.xixienglish_app.api.Api;
 import com.example.xixienglish_app.api.HttpCallBack;
-import com.example.xixienglish_app.entity.ArticleEntity;
 import com.example.xixienglish_app.entity.ArticleEntitySet;
 import com.google.android.material.tabs.TabLayout;
 import java.util.HashMap;
@@ -23,14 +21,14 @@ public class ArticleFragment extends BaseFragment {
 
     private ViewPager pager;
     private TabLayout tabLayout;
-    protected ArticleFragmentPagerAdapter pagerAdapter;
+    protected FragmentPagerAdapter pagerAdapter;
     public static final int SET_ADAPTER = 0x1;
 
 
     /**
      * http请求的线程中不能setAdapter，移到handler中做
      */
-    private Handler handler = new Handler(Looper.getMainLooper()){
+    protected Handler handler = new Handler(Looper.getMainLooper()){
       @Override
       public void handleMessage(Message msg) {
         switch (msg.what){
@@ -52,7 +50,7 @@ public class ArticleFragment extends BaseFragment {
     protected void initView() {
         pager = mRootView.findViewById(R.id.view_pager);
         tabLayout = mRootView.findViewById(R.id.tablayout);
-        pagerAdapter = new ArticleFragmentPagerAdapter(getChildFragmentManager());
+        pagerAdapter = new FragmentPagerAdapter(getChildFragmentManager());
     }
 
     @Override

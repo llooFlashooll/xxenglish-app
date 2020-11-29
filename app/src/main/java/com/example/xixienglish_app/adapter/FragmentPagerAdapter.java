@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * article fragment头部分区的adapter
+ * article fragment与video fragment头部分区的adapter
  */
-public class ArticleFragmentPagerAdapter extends FragmentStatePagerAdapter {
+public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
-    public ArticleFragmentPagerAdapter(@NonNull FragmentManager fm) {
+    public FragmentPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
     }
 
