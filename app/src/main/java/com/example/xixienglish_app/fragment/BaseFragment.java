@@ -23,7 +23,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(mRootView == null) {
+        if (mRootView == null) {
             mRootView = inflater.inflate(initLayout(), container, false);
             initView();
         }
@@ -44,6 +44,7 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 绑定xml
+     *
      * @return
      */
     protected abstract int initLayout();

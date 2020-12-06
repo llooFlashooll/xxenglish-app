@@ -95,4 +95,7 @@ dependencies {
 
     // fastjson
     implementation 'com.alibaba:fastjson:1.1.72.android'
+
+    // Agora
+    implementation 'io.agora.rtc:full-sdk:3.1.2'
 }
