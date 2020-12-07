@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.activity.ArticleDetailActivity;
 import com.example.xixienglish_app.activity.BaseActivity;
+import com.example.xixienglish_app.activity.CommentDetailActivity;
+import com.example.xixienglish_app.activity.InputNCommentActivity;
 import com.example.xixienglish_app.entity.ArticleEntity;
 import com.example.xixienglish_app.entity.CommentEntity;
 import com.example.xixienglish_app.fragment.BaseFragment;
@@ -24,18 +26,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 一级评论/根评论
+ */
 public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.ViewHolder>{
   private Context context;
   private List<CommentEntity> list;
+  private BaseActivity parent;
 
-  /**
-   *
-   * @param context
-   * @param list 传入的列表项
-   */
-  public CommentItemAdapter(Context context, List<CommentEntity> list){
+
+  public CommentItemAdapter(Context context, List<CommentEntity> list, BaseActivity parent){
     this.context = context;
     this.list = list;
+    this.parent = parent;
   }
 
 
@@ -52,6 +55,20 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.
     CommentEntity e = list.get(position);
     holder.username.setText(e.getName());
     holder.commentContent.setText(e.getContent());
+    holder.wrapper.setOnClickListener(v -> {
+        Map<String, String> params = new HashMap<String, String>(){{
+           put("rootReviewId", e.getRootReviewId());
+        }};
+        parent.navigateToWithParams(CommentDetailActivity.class, params);
+    });
+    holder.wrapper.setOnLongClickListener(v -> {
+        Map<String, String> params = new HashMap<String, String>(){{
+            put("preReviewId", e.getRootReviewId());
+            put("rootReviewId", e.getRootReviewId());
+        }};
+        parent.navigateToWithParams(InputNCommentActivity.class, params);
+        return false;
+    });
   }
 
   @Override
@@ -62,10 +79,12 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.
   class ViewHolder extends RecyclerView.ViewHolder{
     private TextView username;
     private TextView commentContent;
+    private LinearLayout wrapper;
     public ViewHolder(View v){
       super(v);
       username = v.findViewById(R.id.username);
       commentContent = v.findViewById(R.id.comment_content);
+      wrapper = v.findViewById(R.id.wrapper);
     }
   }
 }

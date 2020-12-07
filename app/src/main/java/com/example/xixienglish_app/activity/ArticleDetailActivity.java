@@ -50,7 +50,7 @@ public class ArticleDetailActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SET_ADAPTER:
-                    recyclerView.setAdapter(new CommentItemAdapter(thisActivity, commentEntityList));
+                    recyclerView.setAdapter(new CommentItemAdapter(thisActivity, commentEntityList, thisActivity));
                     break;
             }
         }
