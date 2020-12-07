@@ -53,6 +53,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         Looper.loop();
     }
 
+    public void showToastOnOtherThread(String msg) {
+        runOnUiThread(() -> XToast.info(mContext, msg).show());
+    }
+
     public void navigateTo(Class cls) {
         Intent in = new Intent(mContext, cls);
         startActivity(in);

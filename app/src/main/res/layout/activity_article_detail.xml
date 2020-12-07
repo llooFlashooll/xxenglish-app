@@ -4,165 +4,186 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ArticleDetailActivity"
-    android:orientation="vertical">
-<LinearLayout
-  android:layout_width="match_parent"
-  android:layout_height="0dp"
-  android:layout_weight="1"
-  android:layout_marginHorizontal="24dp"
-  android:layout_marginTop="24dp"
-  android:orientation="horizontal"
-  android:layout_gravity="center_vertical">
-  <ImageView
-    android:layout_width="28dp"
-    android:layout_height="match_parent"
-    android:src="@drawable/icon_back2"
-    android:id="@+id/back"/>
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:text="back"
-    android:textSize="24dp"
-    android:layout_marginLeft="5dp"
-    android:textColor="#454545"/>
-</LinearLayout>
+    android:orientation="vertical"
+    tools:context=".activity.ArticleDetailActivity">
 
-  <androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="12">
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:id="@+id/article_detail">
-      <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:id="@+id/title"
-        android:text="title"
-        android:textColor="#000000"
-        android:textSize="32dp"
-        android:gravity="center"/>
-      <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@android:color/darker_gray"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginHorizontal="24dp"/>
-      <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical"
         android:layout_marginHorizontal="24dp"
-        android:src="@mipmap/article_image"
-        android:id="@+id/image"/>
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/content"
-        android:text="zhengwenzhengwenzhengwen"
-        android:textSize="18dp"
-        android:textColor="#454545"
-        android:fontFamily="sans-serif-condensed"
-        android:layout_marginHorizontal="24dp"/>
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="精彩评论"
-        android:textSize="17dp"
         android:layout_marginTop="24dp"
-        android:layout_marginHorizontal="24dp"
-        android:textColor="#000000"/>
-      <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@android:color/darker_gray"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginHorizontal="24dp"/>
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-      <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv"/>
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_back2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text="back"
+            android:textColor="#454545"
+            android:textSize="24dp" />
     </LinearLayout>
-  </androidx.core.widget.NestedScrollView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12">
+
+        <LinearLayout
+            android:id="@+id/article_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="title"
+                android:textColor="#000000"
+                android:textSize="32dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray" />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:src="@mipmap/article_image" />
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="zhengwenzhengwenzhengwen"
+                android:textColor="#454545"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="24dp"
+                android:text="精彩评论"
+                android:textColor="#000000"
+                android:textSize="17dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:orientation="horizontal"
-    android:layout_weight="1.2"
-    android:background="#ffffff"
-    android:paddingTop="7dp"
-    android:paddingBottom="7dp">
-      <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="24dp"
-          android:src="@drawable/colorful_praise" />
-        <Button
-          android:id="@+id/btn_like"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="点赞"
-          android:textSize="16dp"
-          android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onLikeClick"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:src="@drawable/colorful_praise" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="点赞"
+                android:textSize="16dp" />
 
 
-      </LinearLayout>
-      <View
-        android:layout_width="0.5dp"
-        android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"/>
-      <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="24dp"
-          android:src="@drawable/colorful_comment" />
-        <Button
-          android:id="@+id/btn_comment"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="评论"
-          android:textSize="16dp"
-          android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onCommentClick"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:src="@drawable/colorful_comment" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="评论"
+                android:textSize="16dp" />
 
 
-      </LinearLayout>
-      <View
-        android:layout_width="0.5dp"
-        android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"/>
-      <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="24dp"
-          android:src="@drawable/colorful_collection" />
-        <Button
-          android:id="@+id/btn_collect"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="收藏"
-          android:textSize="16dp"
-          android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:onClick="onCollectClick"
+                android:src="@drawable/colorful_collection" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="收藏"
+                android:textSize="16dp" />
+        </LinearLayout>
     </LinearLayout>
-  </LinearLayout>
 </LinearLayout>

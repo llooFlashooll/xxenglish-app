@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Xixienglishapp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.AgoraActivity"></activity>
+        <activity android:name=".activity.InputCommentActivity"></activity>
         <activity android:name=".activity.LiveActivity" /> <!-- 提供文件路径权限 -->
         <provider
             android:name="androidx.core.content.FileProvider"
