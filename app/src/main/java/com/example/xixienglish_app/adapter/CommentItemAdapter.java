@@ -32,10 +32,10 @@ import java.util.Map;
 public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.ViewHolder>{
   private Context context;
   private List<CommentEntity> list;
-  private BaseActivity parent;
+  private BaseFragment parent;
 
 
-  public CommentItemAdapter(Context context, List<CommentEntity> list, BaseActivity parent){
+  public CommentItemAdapter(Context context, List<CommentEntity> list, BaseFragment parent){
     this.context = context;
     this.list = list;
     this.parent = parent;
@@ -59,14 +59,16 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.
         Map<String, String> params = new HashMap<String, String>(){{
            put("rootReviewId", e.getRootReviewId());
         }};
-        parent.navigateToWithParams(CommentDetailActivity.class, params);
+        BaseActivity baseActivity = (BaseActivity) parent.getActivity();
+        baseActivity.navigateToWithParams(CommentDetailActivity.class, params);
     });
     holder.wrapper.setOnLongClickListener(v -> {
         Map<String, String> params = new HashMap<String, String>(){{
             put("preReviewId", e.getRootReviewId());
             put("rootReviewId", e.getRootReviewId());
         }};
-        parent.navigateToWithParams(InputNCommentActivity.class, params);
+        BaseActivity baseActivity = (BaseActivity) parent.getActivity();
+        baseActivity.navigateToWithParams(InputNCommentActivity.class, params);
         return false;
     });
   }

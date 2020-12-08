@@ -69,6 +69,7 @@ public class VideoFragmentItemAdapter extends RecyclerView.Adapter<VideoFragment
             BaseActivity activity = (BaseActivity) parent.getActivity();
             Map<String, String> params = new HashMap<String, String>() {{
                 put("content", e.getContent());
+                put("newsId", e.getNewsId());
             }};
             activity.navigateToWithParams(VideoDetailActivity.class, params);
         });
