@@ -44,8 +44,6 @@ public class Api {
     }
 
     public void postRequest(final HttpCallBack callBack){
-        /*SharedPreferences sp = context.getSharedPreferences("sp_ttit", MODE_PRIVATE);
-        String token = sp.getString("token", "");*/
 
         // 将参数转换为json格式
         JSONObject jsonObject = new JSONObject(mParams);
@@ -57,7 +55,6 @@ public class Api {
         Request request = new Request.Builder()
                 .url(requestUrl)
                 .addHeader("contentType", "application/json;charset=UTF-8")
-//                .addHeader("token", token)
                 .post(requestBodyJson)
                 .build();
 
@@ -80,6 +77,8 @@ public class Api {
             }
         });
     }
+
+    // postRequest还有一种表单方式发送，此处不集成了
 
   public void getRequest(Context context, final HttpCallBack callback) {
     SharedPreferences sp = context.getSharedPreferences("sp_flash", MODE_PRIVATE);

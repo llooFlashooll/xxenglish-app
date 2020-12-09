@@ -41,6 +41,10 @@ import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.adapter.DrawerAdapter;
 import com.example.xixienglish_app.adapter.DrawerItem;
 import com.example.xixienglish_app.adapter.SimpleDrawerItemAdapter;
+import com.example.xixienglish_app.fragment.ArticleFragment;
+import com.example.xixienglish_app.fragment.ClassFragment;
+import com.example.xixienglish_app.fragment.MyFragment;
+import com.example.xixienglish_app.fragment.VideoFragment;
 import com.example.xixienglish_app.util.PhotoPopupWindow;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.xuexiang.xui.utils.ResUtils;
@@ -94,6 +98,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
     protected void initView() {
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
 
+        // 侧边栏数据
         btnDrawer = findViewById(R.id.btn_drawer);
         mMenuTitles = ResUtils.getStringArray(R.array.menu_titles);
         mMenuIcons = ResUtils.getDrawableArray(this, R.array.menu_icons);

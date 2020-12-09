@@ -92,16 +92,24 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     // 存token
-    protected void insertVal(String key, String val) {
-        SharedPreferences sp = getSharedPreferences("sp_flash", MODE_PRIVATE);
+    protected void insertValueToSp(String key, String val) {
+        SharedPreferences sp = getSharedPreferences("sp_xixienglish", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString(key, val);
         editor.commit();
     }
 
     // 取token
-    protected String findByKey(String key) {
-        SharedPreferences sp = getSharedPreferences("sp_flash", MODE_PRIVATE);
+    protected String getValueFromSp(String key) {
+        SharedPreferences sp = getSharedPreferences("sp_xixienglish", MODE_PRIVATE);
         return sp.getString(key, "");
+    }
+
+    // 删除token数据
+    protected void removeValueFromSp(String key) {
+        SharedPreferences sharedPreferences = getSharedPreferences("sp_xixienglish", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(key);
+        editor.commit();
     }
 }

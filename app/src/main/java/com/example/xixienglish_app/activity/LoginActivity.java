@@ -107,13 +107,14 @@ public class LoginActivity extends BaseActivity {
 
                 Gson gson = new Gson();
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
+
                 if (loginResponse.getCode() == 200) {
                     Looper.prepare();
                     showToast("登陆成功");
                     String token = loginResponse.getData();
                     Log.e("onSuccess", token);
                     // 应用sharedPreference存键值对
-//                    insertVal("token", token);
+                    insertValueToSp("token", token);
                     navigateToWithFlags(MainActivity.class,
                             Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     Looper.loop();

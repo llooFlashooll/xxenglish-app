@@ -16,7 +16,16 @@ import com.example.xixienglish_app.entity.LoginResponse;
 import com.example.xixienglish_app.util.StringUtils;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class LoginEmailActivity extends BaseActivity {
@@ -102,18 +111,18 @@ public class LoginEmailActivity extends BaseActivity {
             return;
         }
 
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("email", email);
-
-        Api.config(ApiConfig.APPLYLOGIN, params).postRequest(new HttpCallBack() {
-
+        /**********    PostByFormBody     **********/
+        // 此处重写回调方法
+        HttpCallBack callBack = new HttpCallBack() {
             @Override
-            public void onSuccess(final String res) {
+            public void onSuccess(String res) {
                 Log.e("onSuccess", res);
-                showToastSync(res);
+//                showToastSync(res);
 
                 Gson gson = new Gson();
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
+                Log.e("For Email", res);
+
                 if (loginResponse.getCode() == 200) {
                     Looper.prepare();
                     showToast("获取验证码成功");
@@ -131,6 +140,33 @@ public class LoginEmailActivity extends BaseActivity {
             public void onFailure(Exception e) {
 
             }
+        };
+
+        // 此处postRequest通过发送表单实现
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .build();
+        FormBody formBody = new FormBody.Builder()
+                .add("email", email).build();
+
+        Request request = new Request.Builder()
+                .post(formBody)
+                .url("http://139.196.153.21:8888/applyToLogin")
+                .build();
+        // 调用okHttpClient对象实现CallBack方法
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("onFailure", e.getMessage());
+                callBack.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                Log.d("onSuccess","---Success---");
+                callBack.onSuccess(result);
+            }
         });
     }
 
@@ -144,26 +180,24 @@ public class LoginEmailActivity extends BaseActivity {
             return;
         }
 
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("account", email);
-        params.put("password", verifyCode);
-
-        Api.config(ApiConfig.LOGINBYEMAIL, params).postRequest(new HttpCallBack() {
-
+        /**********    PostByFormBody     **********/
+        // 此处重写回调方法
+        HttpCallBack callBack = new HttpCallBack() {
             @Override
-            public void onSuccess(final String res) {
+            public void onSuccess(String res) {
                 Log.e("onSuccess", res);
-                showToastSync(res);
+//                showToastSync(res);
 
                 Gson gson = new Gson();
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
+
                 if (loginResponse.getCode() == 200) {
                     Looper.prepare();
                     showToast("登陆成功");
                     String token = loginResponse.getData();
                     Log.e("onSuccess", token);
                     // 应用sharedPreference存键值对
-//                    insertVal("token", token);
+                    insertValueToSp("token", token);
                     navigateToWithFlags(MainActivity.class,
                             Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     Looper.loop();
@@ -178,6 +212,34 @@ public class LoginEmailActivity extends BaseActivity {
             public void onFailure(Exception e) {
 
             }
+        };
+
+        // 此处postRequest通过发送表单实现
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .build();
+        FormBody formBody = new FormBody.Builder()
+                .add("email", email).add("verifyCode", verifyCode).build();
+
+        Request request = new Request.Builder()
+                .post(formBody)
+                .url("http://139.196.153.21:8888/loginByEmail")
+                .build();
+        // 调用okHttpClient对象实现CallBack方法
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("onFailure", e.getMessage());
+                callBack.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                Log.d("onSuccess", "---Success---");
+                callBack.onSuccess(result);
+            }
         });
+
     }
 }
