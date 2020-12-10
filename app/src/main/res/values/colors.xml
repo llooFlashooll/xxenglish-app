@@ -12,6 +12,7 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="colorBlue">#2B9FE3</color>
 
   <!--直播界面-->
   <color name="gray_lightest">#DEDEDE</color>

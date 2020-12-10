@@ -12,7 +12,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        app:srcCompat="@mipmap/xixienglish_logo" />
+        app:srcCompat="@mipmap/tongji_logo" />
 
     <TextView
         style="@style/TextStyle.Title"
