@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -27,6 +28,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.TypedValue;
@@ -35,18 +37,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.adapter.DrawerAdapter;
 import com.example.xixienglish_app.adapter.DrawerItem;
 import com.example.xixienglish_app.adapter.SimpleDrawerItemAdapter;
+import com.example.xixienglish_app.api.HttpCallBack;
+import com.example.xixienglish_app.entity.InformationEntity;
+import com.example.xixienglish_app.entity.InformationResponse;
+import com.example.xixienglish_app.entity.TranslationResponse;
 import com.example.xixienglish_app.fragment.ArticleFragment;
 import com.example.xixienglish_app.fragment.ClassFragment;
 import com.example.xixienglish_app.fragment.MyFragment;
 import com.example.xixienglish_app.fragment.VideoFragment;
 import com.example.xixienglish_app.util.PhotoPopupWindow;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 import com.xuexiang.xui.utils.ResUtils;
 import com.xuexiang.xui.utils.ThemeUtils;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
@@ -59,7 +67,14 @@ import com.yarolegovich.slidingrootnav.callback.DragStateListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSelectedListener {
 
@@ -70,6 +85,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
     private Drawable[] mMenuIcons;
     private DrawerAdapter mAdapter;
     private Button btnDrawer;
+    private TextView tv_name;
 
     // 换头像
     private ImageView imageAvatar;
@@ -107,6 +123,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
         initSlidingMenu(super.mSavedInstanceState);
 
         imageAvatar = findViewById(R.id.iv_avatar);
+
+        // 获取用户名
+        initUserName();
     }
 
     @Override
@@ -178,6 +197,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
             }
         });
+
+
     }
 
     @Override
@@ -247,11 +268,16 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
         mSlidingRootNav.getLayout().addDragStateListener(new DragStateListener() {
             @Override
             public void onDragStart() {
-
+                // 显示状态栏名称
+                tv_name = mSlidingRootNav.getLayout().findViewById(R.id.tv_name);
+                if (!getValueFromSp("name").equals("")) {
+                    tv_name.setText(getValueFromSp("name"));
+                }
             }
 
             @Override
             public void onDragEnd(boolean isMenuOpened) {
+
                 // 调用库，初始化动画 —— 控件教学，可改***
                 if (isMenuOpened) {
                     if (!GuideCaseView.isShowOnce(MainActivity.this, getString(R.string.guide_key_sliding_root_navigation))) {
@@ -559,6 +585,54 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
             } else {
                 return null;
             }
+        }
+    }
+
+    /**
+     * 直接获取用户名，显示在界面
+     */
+    public void initUserName() {
+        String token = getValueFromSp("token");
+        if (!token.equals("")) {
+            HttpCallBack callBack = new HttpCallBack() {
+                @Override
+                public void onSuccess(String res) {
+                    Log.e("onSuccess", res);
+//                    showToastSync(res);
+                    Gson gson = new Gson();
+                    InformationResponse informationResponse = gson.fromJson(res, InformationResponse.class);
+                    String name = informationResponse.getData().getName();
+                    insertValueToSp("name", name);
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+
+                }
+            };
+
+            OkHttpClient client = new OkHttpClient.Builder().build();
+            String url = "http://139.196.153.21:8888/personalMessage";
+            Request request = new Request.Builder()
+                    .url(url)
+                    .get()              // 请求方法是get
+                    .addHeader("token", token)
+                    .build();
+            Call call = client.newCall(request);
+
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    callBack.onFailure(e);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String result = response.body().string();
+                    Log.d("onSuccess","---Success---");
+                    callBack.onSuccess(result);
+                }
+            });
         }
     }
 

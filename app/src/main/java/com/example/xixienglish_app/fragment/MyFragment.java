@@ -20,8 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xixienglish_app.R;
+import com.example.xixienglish_app.activity.CollectionDetailActivity;
 import com.example.xixienglish_app.activity.LoginActivity;
 import com.example.xixienglish_app.activity.MainActivity;
+import com.example.xixienglish_app.activity.ThumbsupDetailActivity;
+import com.example.xixienglish_app.activity.WordBookActivity;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
 
@@ -30,6 +33,7 @@ public class MyFragment extends BaseFragment {
     private Button btn_thumbsup;
     private Button btn_collect;
     private Button btn_wordbook;
+    private TextView tv_name;
     private TextView tv_applyTeacher;
     private TextView tv_language;
     private TextView tv_opinion;
@@ -39,6 +43,7 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected int initLayout() {
+        // 此处的跳转有点问题***，但不影响整个项目
         String token = getValueFromSp("token");
         Log.e("For token", token);
         if (getValueFromSp("token").equals("")) {
@@ -55,6 +60,10 @@ public class MyFragment extends BaseFragment {
         btn_thumbsup = mRootView.findViewById(R.id.btn_thumbsup);
         btn_collect = mRootView.findViewById(R.id.btn_collect);
         btn_wordbook = mRootView.findViewById(R.id.btn_wordbook);
+        tv_name = mRootView.findViewById(R.id.tv_name);
+        if (!getValueFromSp("name").equals("")) {
+            tv_name.setText(getValueFromSp("name"));
+        }
         tv_applyTeacher = mRootView.findViewById(R.id.tv_applyTeacher);
         tv_language = mRootView.findViewById(R.id.tv_language);
         tv_opinion = mRootView.findViewById(R.id.tv_opinion);
@@ -68,21 +77,21 @@ public class MyFragment extends BaseFragment {
         btn_thumbsup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                navigateTo(ThumbsupDetailActivity.class);
             }
         });
 
         btn_collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                navigateTo(CollectionDetailActivity.class);
             }
         });
 
         btn_wordbook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                navigateTo(WordBookActivity.class);
             }
         });
 
@@ -132,6 +141,7 @@ public class MyFragment extends BaseFragment {
                             dialog.dismiss();
                             showToast("退出登录~");
                             removeValueFromSp("token");
+                            removeValueFromSp("name");
                             navigateTo(MainActivity.class);
                         },
                         "否",
