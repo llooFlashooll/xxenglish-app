@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/myFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.MyFragment">
 
@@ -33,29 +34,15 @@
                     app:cardCornerRadius="10dp"
                     app:cardElevation="2dp">
 
-                    <com.xuexiang.xui.widget.imageview.RadiusImageView
-                        android:id="@+id/iv_avatar"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginLeft="10dp"
-                        android:clickable="true"
-                        android:src="@drawable/icon_avatar"
-                        app:riv_border_color="@color/xui_config_color_gray_6"
-                        app:riv_border_width="0dp"
-                        app:riv_is_circle="true"
-                        app:riv_selected_border_color="@color/xui_config_color_gray_4"
-                        app:riv_selected_border_width="1px"
-                        app:riv_selected_mask_color="@color/xui_config_color_gray_8" />
-
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="100dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="18dp"
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Allen Zhuang"
@@ -66,10 +53,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="Welcome to xixienglish~"
+                            android:text="Welcome to xixienglish~ Have your time."
                             android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
+
+                    <com.xuexiang.xui.widget.imageview.RadiusImageView
+                        android:id="@+id/iv_avatar2"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="270dp"
+                        android:clickable="true"
+                        android:src="@mipmap/tongji_logo"
+                        app:riv_border_color="@color/xui_config_color_gray_6"
+                        app:riv_border_width="0dp"
+                        app:riv_is_circle="true"
+                        app:riv_selected_border_color="@color/xui_config_color_gray_4"
+                        app:riv_selected_border_width="1px"
+                        app:riv_selected_mask_color="@color/xui_config_color_gray_8" />
 
 
                 </androidx.cardview.widget.CardView>

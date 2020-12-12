@@ -56,6 +56,31 @@
 
         </FrameLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:tint="?attr/colorAccent"
+                app:srcCompat="@drawable/ic_phone" />
+
+            <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:hint="请输入昵称"
+                app:met_clearButton="true"
+                app:met_errorMessage="@string/tip_account_error"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="昵称"
+                />
+
+        </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"

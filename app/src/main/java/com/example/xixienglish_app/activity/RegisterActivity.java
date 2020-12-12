@@ -1,7 +1,9 @@
 package com.example.xixienglish_app.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +20,7 @@ import com.example.xixienglish_app.entity.LoginResponse;
 import com.example.xixienglish_app.fragment.ArticlePartitionFragment;
 import com.example.xixienglish_app.util.StringUtils;
 import com.google.gson.Gson;
+import com.xuexiang.xui.widget.imageview.crop.Handle;
 
 import org.json.JSONObject;
 
@@ -37,10 +40,13 @@ import okhttp3.Response;
 public class RegisterActivity extends BaseActivity {
 
     private EditText etAccount;
+    private EditText etName;
     private EditText etPassword;
     private Button btnRegister;
     private TextView userProtocol;
     private TextView privProtocol;
+
+    private final int MSG_NAME = 0;
 
     @Override
     protected int initLayout() {
@@ -50,6 +56,7 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void initView() {
         etAccount = findViewById(R.id.edit_account);
+        etName = findViewById(R.id.edit_name);
         etPassword = findViewById(R.id.edit_password);
         btnRegister = findViewById(R.id.btn_register);
         userProtocol = findViewById(R.id.tv_user_protocol);
@@ -62,8 +69,10 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String account = etAccount.getText().toString().trim();
+                String name = etName.getText().toString().trim();
                 String pwd = etPassword.getText().toString().trim();
-                register(account, pwd);
+
+                register(account, name, pwd);
             }
         });
 
@@ -82,11 +91,17 @@ public class RegisterActivity extends BaseActivity {
         });
     }
 
-    private void register(String account, String pwd) {
+    private void register(String account, String name, String pwd) {
         if (StringUtils.isEmpty(account)) {
             showToast("请输入账号");
             return;
         }
+
+        if (StringUtils.isEmpty(name)) {
+            showToast("请输入昵称");
+            return;
+        }
+
         if (StringUtils.isEmpty(pwd)) {
             showToast("请输入密码");
             return;
@@ -94,6 +109,7 @@ public class RegisterActivity extends BaseActivity {
 
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("account", account);
+        params.put("name", name);
         params.put("password", pwd);
 
         Api.config(ApiConfig.REGISTER, params).postRequest(new HttpCallBack() {
@@ -102,11 +118,13 @@ public class RegisterActivity extends BaseActivity {
             public void onSuccess(final String res) {
                 Log.e("onSuccess", res);
 
+
                 Gson gson = new Gson();
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
                 if (loginResponse.getCode() == 200) {
                     Looper.prepare();
                     showToast(loginResponse.getMsg());
+
                     navigateToWithFlags(LoginActivity.class,
                             Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     Looper.loop();

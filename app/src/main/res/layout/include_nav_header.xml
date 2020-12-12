@@ -34,10 +34,10 @@
             app:riv_selected_mask_color="@color/xui_config_color_gray_8" />
 
         <TextView
-            android:id="@+id/tv_avatar"
+            android:id="@+id/tv_name"
             style="@style/TextStyle.Title"
             android:layout_marginStart="?attr/xui_config_content_spacing_horizontal"
-            android:text="Allen Zhuang" />
+            android:text="Default" />
 
     </LinearLayout>
 
