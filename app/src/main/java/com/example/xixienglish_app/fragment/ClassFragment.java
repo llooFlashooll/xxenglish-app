@@ -41,7 +41,7 @@ public class ClassFragment extends BaseFragment {
             switch (msg.what) {
                 case SET_ADAPTER:
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    recyclerView.setAdapter(new CourseAdapter(courseEntityList, getActivity(), thisFragment));
+                    recyclerView.setAdapter(new CourseAdapter(courseEntityList, getActivity(), 0, thisFragment));
                     break;
             }
         }

@@ -23,6 +23,7 @@ import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.activity.CollectionDetailActivity;
 import com.example.xixienglish_app.activity.LoginActivity;
 import com.example.xixienglish_app.activity.MainActivity;
+import com.example.xixienglish_app.activity.MyCourseActivity;
 import com.example.xixienglish_app.activity.ThumbsupDetailActivity;
 import com.example.xixienglish_app.activity.WordBookActivity;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
@@ -120,6 +121,8 @@ public class MyFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 showToast("I think it have to be top rate");
+                // TODO: 暂时用评分按钮作为我的课堂
+                navigateTo(MyCourseActivity.class);
             }
         });
 
