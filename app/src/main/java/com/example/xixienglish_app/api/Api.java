@@ -51,10 +51,16 @@ public class Api {
         RequestBody requestBodyJson =
                 RequestBody.create(MediaType.parse("application/json;charset=utf-8"), jsonStr);
 
+        // 如果有token加上token
+        String token = "";
+        if (mParams.containsKey("token")) {
+            token = (String) mParams.get("token");
+        }
         // 创建request, 将json发送到远端
         Request request = new Request.Builder()
                 .url(requestUrl)
                 .addHeader("contentType", "application/json;charset=UTF-8")
+                .addHeader("token", token)
                 .post(requestBodyJson)
                 .build();
 

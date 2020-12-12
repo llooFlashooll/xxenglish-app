@@ -20,15 +20,17 @@ public class InputNCommentActivity extends InputCommentActivity {
      * 发表按钮事件触发
      */
     public void onPostClick (View v) {
-
-        // TODO: 待登录功能联调成功后从本地拿
-        String userId = "ffe650b0-9c5c-45b9-8833-af90f4dba0d1";
+        String token = getValueFromSp("token");
+        if (token == null || token.isEmpty()) {
+            showToast("请先登录");
+            return;
+        }
         String content = inputText.getText().toString();
         HashMap<String, Object> bodyInfo = new HashMap<String, Object> () {{
             put("content", content);
             put("preReviewId", getNavigationParams("preReviewId"));
             put("rootReviewId", getNavigationParams("rootReviewId"));
-            put("userId", userId);
+            put("token", token);
             }
         };
         Api.config("/review/second", bodyInfo).postRequest(new HttpCallBack() {
