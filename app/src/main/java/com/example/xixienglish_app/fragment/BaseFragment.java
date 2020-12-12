@@ -77,7 +77,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     // 取token
-    protected String getValueFromSp(String key) {
+    public String getValueFromSp(String key) {
         SharedPreferences sp = getContext().getSharedPreferences("sp_xixienglish", Context.MODE_PRIVATE);
         return sp.getString(key, "");
     }

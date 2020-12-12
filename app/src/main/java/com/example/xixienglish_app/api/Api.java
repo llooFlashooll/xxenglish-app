@@ -81,7 +81,7 @@ public class Api {
     // postRequest还有一种表单方式发送，此处不集成了
 
   public void getRequest(Context context, final HttpCallBack callback) {
-    SharedPreferences sp = context.getSharedPreferences("sp_flash", MODE_PRIVATE);
+    SharedPreferences sp = context.getSharedPreferences("sp_xixienglish", MODE_PRIVATE);
     String token = sp.getString("token", "");
     // 请求url = baseurl + 相对路径 + 参数
     String url = getAppendUrl(requestUrl, mParams);

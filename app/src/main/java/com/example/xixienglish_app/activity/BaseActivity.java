@@ -3,6 +3,7 @@ package com.example.xixienglish_app.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 
@@ -72,6 +73,11 @@ public abstract class BaseActivity extends AppCompatActivity {
       for(Map.Entry<String, String> cur : hash.entrySet())
         in.putExtra(cur.getKey(), cur.getValue());
       startActivity(in);
+    }
+
+    public void navigateToUrl(String url) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
     }
 
     /**

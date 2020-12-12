@@ -6,24 +6,9 @@
     android:orientation="vertical"
     tools:context=".fragment.ClassFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="class" />
-    <Button
-      android:layout_width="match_parent"
-      android:layout_height="50dp"
-      android:text="支付"
-      android:id="@+id/btn_pay"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/btn_live_audience"
-        android:text="直播--观众入口"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/btn_live_broadcaster"
-        android:text="直播--主播入口"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/rv"/>
 
 </LinearLayout>
