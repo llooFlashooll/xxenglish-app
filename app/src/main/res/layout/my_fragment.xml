@@ -35,43 +35,53 @@
                     app:cardElevation="2dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="18dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Allen Zhuang"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:layout_marginTop="18dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="30dp"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Welcome to xixienglish~ Have your time."
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            <TextView
+                                android:id="@+id/tv_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Allen Zhuang"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Welcome to xixienglish~ Have your time."
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <com.xuexiang.xui.widget.imageview.RadiusImageView
+                            android:id="@+id/iv_avatar2"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="0"
+                            android:clickable="true"
+                            android:src="@mipmap/tongji_logo"
+                            app:riv_border_color="@color/xui_config_color_gray_6"
+                            app:riv_border_width="0dp"
+                            app:riv_is_circle="true"
+                            app:riv_selected_border_color="@color/xui_config_color_gray_4"
+                            app:riv_selected_border_width="1px"
+                            app:riv_selected_mask_color="@color/xui_config_color_gray_8" />
                     </LinearLayout>
 
-                    <com.xuexiang.xui.widget.imageview.RadiusImageView
-                        android:id="@+id/iv_avatar2"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginLeft="270dp"
-                        android:clickable="true"
-                        android:src="@mipmap/tongji_logo"
-                        app:riv_border_color="@color/xui_config_color_gray_6"
-                        app:riv_border_width="0dp"
-                        app:riv_is_circle="true"
-                        app:riv_selected_border_color="@color/xui_config_color_gray_4"
-                        app:riv_selected_border_width="1px"
-                        app:riv_selected_mask_color="@color/xui_config_color_gray_8" />
+
+
 
 
                 </androidx.cardview.widget.CardView>
@@ -95,11 +105,17 @@
                     >
 
                     <LinearLayout
-                        android:layout_width="95dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_marginLeft="15dp">
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="95dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_weight="0.5"
+                            android:orientation="vertical"
+                            >
 
                             <Button
                                 android:id="@+id/btn_thumbsup"
@@ -116,21 +132,21 @@
                                 android:layout_marginTop="4dp"
                                 android:text="赞过的帖"
                                 android:textColor="@color/black" />
-                    </LinearLayout>
+                        </LinearLayout>
 
-                    <View
-                        android:layout_width="1dip"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray_light"
-                        android:layout_marginLeft="115dp"
-                        />
+                        <View
+                            android:layout_width="1dip"
+                            android:layout_height="match_parent"
+                            android:background="@color/gray_light"
+                            />
 
-                    <LinearLayout
-                        android:layout_width="95dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_marginLeft="130dp">
+                        <LinearLayout
+                            android:layout_width="95dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            >
 
                             <Button
                                 android:id="@+id/btn_collect"
@@ -147,38 +163,41 @@
                                 android:layout_marginTop="4dp"
                                 android:text="收藏夹"
                                 android:textColor="@color/black" />
-                    </LinearLayout>
+                        </LinearLayout>
 
-                    <View
-                        android:layout_width="1dip"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray_light"
-                        android:layout_marginLeft="240dp"
-                        />
+                        <View
+                            android:layout_width="1dip"
+                            android:layout_height="match_parent"
+                            android:background="@color/gray_light"
 
-                    <LinearLayout
-                        android:layout_width="95dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_marginLeft="250dp">
+                            />
 
-                        <Button
-                            android:id="@+id/btn_wordbook"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:background="@drawable/ic_baseline_collections_bookmark_24"
-                            android:backgroundTint="@color/colorPrimary"
+                        <LinearLayout
+                            android:layout_width="95dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:orientation="vertical"
                             >
-                        </Button>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="生词本"
-                            android:textColor="@color/black" />
+                            <Button
+                                android:id="@+id/btn_wordbook"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:background="@drawable/ic_baseline_collections_bookmark_24"
+                                android:backgroundTint="@color/colorPrimary"
+                                >
+                            </Button>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="生词本"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
                     </LinearLayout>
+
                 </androidx.cardview.widget.CardView>
 
 
@@ -245,13 +264,13 @@
                     android:paddingRight="30dp">
 
                     <TextView
-                        android:id="@+id/tv_language"
+                        android:id="@+id/tv_information"
                         android:clickable="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
-                        android:text="语言设置"
+                        android:text="个人信息"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </RelativeLayout>
@@ -272,13 +291,13 @@
                     android:paddingRight="30dp">
 
                     <TextView
-                        android:id="@+id/tv_opinion"
+                        android:id="@+id/tv_class"
                         android:clickable="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
-                        android:text="意见反馈"
+                        android:text="我的课堂"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </RelativeLayout>

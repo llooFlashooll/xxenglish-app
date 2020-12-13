@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.WordBookActivity">
+    tools:context=".activity.WordBookActivity"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
