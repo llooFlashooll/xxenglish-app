@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.example.xixienglish_app.R;
-import com.example.xixienglish_app.adapter.ArticleFragmentItemAdapter;
 import com.example.xixienglish_app.adapter.ArticleVideoItemAdapter;
 import com.example.xixienglish_app.api.Api;
 import com.example.xixienglish_app.api.HttpCallBack;

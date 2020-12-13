@@ -4,38 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
+
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.example.xixienglish_app.R;
-import com.example.xixienglish_app.adapter.ArticleFragmentItemAdapter;
 import com.example.xixienglish_app.adapter.ArticleVideoItemAdapter;
-import com.example.xixienglish_app.adapter.CommentDetailAdapter;
 import com.example.xixienglish_app.api.Api;
 import com.example.xixienglish_app.api.HttpCallBack;
 import com.example.xixienglish_app.entity.ArticleEntity;
-import com.example.xixienglish_app.entity.ArticleEntitySet;
-import com.example.xixienglish_app.entity.CourseEntity;
-import com.example.xixienglish_app.entity.InformationResponse;
-import com.example.xixienglish_app.fragment.ArticlePartitionFragment;
-import com.example.xixienglish_app.fragment.BaseFragment;
-import com.google.gson.Gson;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * 获取用户点赞的帖子列表

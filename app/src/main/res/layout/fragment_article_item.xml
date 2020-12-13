@@ -119,7 +119,7 @@
            />
 
         <TextView
-          android:id="@+id/comment"
+          android:id="@+id/review_num"
           style="@style/TextStyle.Explain"
           android:layout_marginStart="5dp"
           tools:text="评论" />
@@ -128,7 +128,7 @@
       </LinearLayout>
 
       <TextView
-        android:id="@+id/read"
+        android:id="@+id/favorites"
         style="@style/TextStyle.Explain"
         android:layout_gravity="center_vertical|end"
         tools:text="阅读量: 123" />

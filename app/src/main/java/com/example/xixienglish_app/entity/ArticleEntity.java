@@ -3,130 +3,136 @@ package com.example.xixienglish_app.entity;
 import java.util.Date;
 
 public class ArticleEntity {
-  /**
-   * 点赞数量
-   */
-  private Integer likes = 10;
-  /**
-   * 评论数量
-   */
-  private Integer comment = 15;
-  /**
-   * 文章摘要
-   */
-  private String summary = "";
-  /**
-   * 阅读量
-   */
-  private String read = "12";
-  /**
-   * 文章主键
-   */
-  private String newsId;
-  /**
-   * 新闻标题
-   */
-  private String title;
-  /**
-   * 新闻类别
-   */
-  private String tag;
-  /**
-   * 创建时间
-   */
-  private Date datetime;
-  /**
-   * 原文链接
-   */
-  private String url;
-  /**
-   * 封面图外链
-   */
-  private String image;
-  /**
-   * 文章内容
-   */
-  private String content;
+    /**
+     * 点赞数量
+     */
+    private Integer likes = 0;
+    /**
+     * 评论数量
+     */
+    private Integer reviewNum = 0;
+    /**
+     *  收藏数量
+     */
+    private Integer favorites = 0;
+    /**
+     * 文章摘要
+     */
+    private String summary = "";
+    /**
+     * 文章主键
+     */
+    private String newsId;
+    /**
+     * 新闻标题
+     */
+    private String title;
+    /**
+     * 新闻类别
+     */
+    private String tag;
+    /**
+     * 创建时间
+     */
+    private Date datetime;
+    /**
+     * 原文链接
+     */
+    private String url;
+    /**
+     * 封面图外链
+     */
+    private String image;
+    /**
+     * 文章内容
+     */
+    private String content;
 
+    public Integer getLikes() {
+        return likes;
+    }
 
-  public String getContent() {
-    return content;
-  }
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
 
-  public void setContent(String content) {
-    this.content = content;
-  }
+    public Integer getReviewNum() {
+        return reviewNum;
+    }
 
-  public String getTag() {
-    return tag;
-  }
+    public void setReviewNum(Integer reviewNum) {
+        this.reviewNum = reviewNum;
+    }
 
-  public String getTitle() {
-    return title;
-  }
+    public Integer getFavorites() {
+        return favorites;
+    }
 
-  public String getImage() {
-    return image;
-  }
+    public void setFavorites(Integer favorites) {
+        this.favorites = favorites;
+    }
 
-  public Integer getLikes() {
-    return likes;
-  }
+    public String getSummary() {
+        return summary;
+    }
 
-  public String getNewsId() {
-    return newsId;
-  }
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
-  public void setLikes(Integer likes) {
-    this.likes = likes;
-  }
+    public String getNewsId() {
+        return newsId;
+    }
 
-  public void setComment(Integer comment) {
-    this.comment = comment;
-  }
+    public void setNewsId(String newsId) {
+        this.newsId = newsId;
+    }
 
-  public void setSummary(String summary) {
-    this.summary = summary;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public void setRead(String read) {
-    this.read = read;
-  }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public void setNewsId(String newsId) {
-    this.newsId = newsId;
-  }
+    public String getTag() {
+        return tag;
+    }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
-  public void setTag(String tag) {
-    this.tag = tag;
-  }
+    public Date getDatetime() {
+        return datetime;
+    }
 
-  public void setDatetime(Date datetime) {
-    this.datetime = datetime;
-  }
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
+    }
 
-  public void setUrl(String url) {
-    this.url = url;
-  }
+    public String getUrl() {
+        return url;
+    }
 
-  public void setImage(String image) {
-    this.image = image;
-  }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-  public Integer getComment() {
-    return comment;
-  }
+    public String getImage() {
+        return image;
+    }
 
-  public String getSummary() {
-    return summary;
-  }
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-  public String getRead() {
-    return read;
-  }
+    public String getContent() {
+        return content;
+    }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

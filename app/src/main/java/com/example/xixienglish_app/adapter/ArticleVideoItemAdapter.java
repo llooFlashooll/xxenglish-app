@@ -29,7 +29,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 用于实现activity的跳转，若套用原来的FragmentItem，会报错
+ * zzy用于写点赞/评论/收藏页面的Adapter
+ * 点赞/收藏/评论接口会把文章和视频混在一起返回
+ * 文章的tag不带v，视频的tag带v
+ *
+ * 该Adapter集成了ArticleFragmentItemAdapter和VideoFragmentItemAdapter
  */
 public class ArticleVideoItemAdapter extends RecyclerView.Adapter<ArticleVideoItemAdapter.ViewHolder> {
 
@@ -42,7 +46,7 @@ public class ArticleVideoItemAdapter extends RecyclerView.Adapter<ArticleVideoIt
     // 传参时判断是文章还是视频，0为文章，1为视频
     private int tag;
 
-    // ArticleEntity 和 VideoEntity内容相似
+
     public ArticleVideoItemAdapter(Context context, List<ArticleEntity> list, BaseActivity parentActivity, int tag){
         this.context = context;
         this.list = list;
@@ -69,8 +73,8 @@ public class ArticleVideoItemAdapter extends RecyclerView.Adapter<ArticleVideoIt
         // 若为视频
         if (String.valueOf(e.getTag().charAt(0)).equals("v")) {
             holder.likes.setText("点赞: " + e.getLikes());
-            holder.comment.setText("评论: " + e.getComment());
-            holder.collect.setText("页码: " + position);
+            holder.reviewNum.setText("评论: " + e.getReviewNum());
+            holder.favorites.setText("收藏: " + e.getFavorites());
 
             final Transformation transformation = new RoundedCornersTransformation(20, 10);
             // 设置宽度为无穷大，自动填充父结点
@@ -102,8 +106,8 @@ public class ArticleVideoItemAdapter extends RecyclerView.Adapter<ArticleVideoIt
         else {
             holder.summary.setText(e.getSummary());
             holder.likes.setText(String.valueOf(e.getLikes()));
-            holder.comment.setText(String.valueOf(e.getComment()));
-            holder.read.setText("阅读量: " + position);
+            holder.reviewNum.setText(String.valueOf(e.getReviewNum()));
+            holder.favorites.setText("收藏: " + e.getFavorites());
             holder.tag.setText(e.getTag());
 
             Picasso.get().load(e.getImage()).into(holder.image);
@@ -155,11 +159,10 @@ public class ArticleVideoItemAdapter extends RecyclerView.Adapter<ArticleVideoIt
         private TextView title;
         private TextView summary;
         private TextView likes;
-        private TextView comment;
+        private TextView reviewNum;
+        private TextView favorites;
         private ImageView image;
-        private TextView read;
         private TextView tag;
-        private TextView collect;
         private LinearLayout wrapper;
         public ViewHolder(View v){
             super(v);
@@ -167,10 +170,9 @@ public class ArticleVideoItemAdapter extends RecyclerView.Adapter<ArticleVideoIt
             summary = v.findViewById(R.id.summary);
             likes = v.findViewById(R.id.likes);
             image = v.findViewById(R.id.image);
-            comment = v.findViewById(R.id.comment);
-            read = v.findViewById(R.id.read);
+            reviewNum = v.findViewById(R.id.review_num);
             tag = v.findViewById(R.id.tag);
-            collect = v.findViewById(R.id.collect);
+            favorites = v.findViewById(R.id.favorites);
             wrapper = v.findViewById(R.id.wrapper);
         }
     }

@@ -17,15 +17,15 @@ public class VideoEntity {
     /**
      * 点赞
      */
-    private Integer likes = 10;
+    private Integer likes = 0;
     /**
      * 评论
      */
-    private Integer comment = 15;
+    private Integer reviewNum = 0;
     /**
      * 收藏
      */
-    private Integer collection = 12;
+    private Integer favorites = 0;
 
     /**
      * 对于video，content表示视频的url
@@ -33,12 +33,12 @@ public class VideoEntity {
     private String content = "https://wasd003-1304125386.cos.ap-shanghai.myqcloud.com/video/e4c91a08-d5e5-4d4f-8d58-f0e186c7686b.mp4";
 
 
-    public String getContent() {
-        return content;
+    public String getNewsId() {
+        return newsId;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setNewsId(String newsId) {
+        this.newsId = newsId;
     }
 
     public String getTitle() {
@@ -65,28 +65,27 @@ public class VideoEntity {
         this.likes = likes;
     }
 
-    public Integer getComment() {
-        return comment;
+    public Integer getReviewNum() {
+        return reviewNum;
     }
 
-    public void setComment(Integer comment) {
-        this.comment = comment;
+    public void setReviewNum(Integer reviewNum) {
+        this.reviewNum = reviewNum;
     }
 
-    public Integer getCollection() {
-        return collection;
+    public Integer getFavorites() {
+        return favorites;
     }
 
-    public void setCollection(Integer collection) {
-        this.collection = collection;
+    public void setFavorites(Integer favorites) {
+        this.favorites = favorites;
     }
 
-    public String getNewsId() {
-        return newsId;
+    public String getContent() {
+        return content;
     }
 
-    public void setNewsId(String newsId) {
-        this.newsId = newsId;
+    public void setContent(String content) {
+        this.content = content;
     }
-
 }

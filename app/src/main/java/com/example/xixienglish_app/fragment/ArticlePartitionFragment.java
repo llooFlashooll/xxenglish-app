@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.fastjson.JSON;
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.adapter.ArticleFragmentItemAdapter;
-import com.example.xixienglish_app.adapter.CommentItemAdapter;
 import com.example.xixienglish_app.api.Api;
 import com.example.xixienglish_app.api.HttpCallBack;
 import com.example.xixienglish_app.entity.ArticleEntity;

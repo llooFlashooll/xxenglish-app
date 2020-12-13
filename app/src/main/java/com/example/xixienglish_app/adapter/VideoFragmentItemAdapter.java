@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,10 +54,8 @@ public class VideoFragmentItemAdapter extends RecyclerView.Adapter<VideoFragment
         VideoEntity e = list.get(position);
         holder.title.setText(e.getTitle());
         holder.likes.setText("点赞: " + e.getLikes());
-        holder.comment.setText("评论: " + e.getComment());
-        // todo: 为了便于调试暂时把收藏的部分写作页码，第3次迭代换回来
-        // holder.collect.setText("收藏: " + e.getCollection());
-        holder.collect.setText("页码: " + position);
+        holder.reviewNum.setText("评论: " + e.getReviewNum());
+        holder.favorites.setText("收藏: " + e.getFavorites());
 
         final Transformation transformation = new RoundedCornersTransformation(20, 10);
         // 设置宽度为无穷大，自动填充父结点
@@ -86,8 +83,8 @@ public class VideoFragmentItemAdapter extends RecyclerView.Adapter<VideoFragment
         private ImageView image;
         private TextView title;
         private TextView likes;
-        private TextView comment;
-        private TextView collect;
+        private TextView reviewNum;
+        private TextView favorites;
 
         public ViewHolder(View v) {
             super(v);
@@ -95,8 +92,8 @@ public class VideoFragmentItemAdapter extends RecyclerView.Adapter<VideoFragment
             image = v.findViewById(R.id.image);
             title = v.findViewById(R.id.title);
             likes = v.findViewById(R.id.likes);
-            comment = v.findViewById(R.id.comment);
-            collect = v.findViewById(R.id.collect);
+            reviewNum = v.findViewById(R.id.review_num);
+            favorites = v.findViewById(R.id.favorites);
         }
     }
 

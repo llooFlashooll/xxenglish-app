@@ -88,7 +88,7 @@
           android:src="@drawable/colorful_comment" />
 
         <TextView
-          android:id="@+id/comment"
+          android:id="@+id/review_num"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginLeft="3dp"
@@ -112,7 +112,7 @@
           android:src="@drawable/colorful_collection" />
 
         <TextView
-          android:id="@+id/collect"
+          android:id="@+id/favorites"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginLeft="3dp"
