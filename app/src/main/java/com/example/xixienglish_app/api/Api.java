@@ -79,54 +79,93 @@ public class Api {
     }
 
     // postRequest还有一种表单方式发送，此处不集成了
+    // postRequest带token，要将activity传进来，获取context方法
+    public void postRequestWithToken(Context context, final HttpCallBack callBack){
 
-  public void getRequest(Context context, final HttpCallBack callback) {
-    SharedPreferences sp = context.getSharedPreferences("sp_xixienglish", MODE_PRIVATE);
-    String token = sp.getString("token", "");
-    // 请求url = baseurl + 相对路径 + 参数
-    String url = getAppendUrl(requestUrl, mParams);
-    Request request = new Request.Builder()
-      .url(url)
-      .addHeader("token", token)
-      .get()              // 请求方法是get
-      .build();
-    Call call = client.newCall(request);
-    call.enqueue(new Callback() {
-      @Override
-      public void onFailure(Call call, IOException e) {
-        callback.onFailure(e);
-      }
+        SharedPreferences sp = context.getSharedPreferences("sp_xixienglish", MODE_PRIVATE);
+        String token = sp.getString("token", "");
 
-      @Override
-      public void onResponse(Call call, Response response) throws IOException {
-        final String result = response.body().string();
-        try {
-          JSONObject jsonObject = new JSONObject(result);
-          String code = jsonObject.getString("code");
-          callback.onSuccess(jsonObject.getString("data"));
-        } catch (JSONException e) {
-          e.printStackTrace();
-        }
+        // 将参数转换为json格式
+        JSONObject jsonObject = new JSONObject(mParams);
+        String jsonStr = jsonObject.toString();
+        RequestBody requestBodyJson =
+                RequestBody.create(MediaType.parse("application/json;charset=utf-8"), jsonStr);
 
-      }
-    });
-  }
+        // 创建request, 将json发送到远端
+        Request request = new Request.Builder()
+                .url(requestUrl)
+                .addHeader("contentType", "application/json;charset=UTF-8")
+                .addHeader("token", token)
+                .post(requestBodyJson)
+                .build();
 
-  private String getAppendUrl(String url, Map<String, Object> map) {
-    if (map != null && !map.isEmpty()) {
-      StringBuffer buffer = new StringBuffer();
-      Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator();
-      while (iterator.hasNext()) {
-        Map.Entry<String, Object> entry = iterator.next();
-        if (StringUtils.isEmpty(buffer.toString())) {
-          buffer.append("?");
-        } else {
-          buffer.append("&");
-        }
-        buffer.append(entry.getKey()).append("=").append(entry.getValue());
-      }
-      url += buffer.toString();
+        // 创建call回调对象
+        final Call call = client.newCall(request);
+        // 发起请求
+        call.enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("onFailure", e.getMessage());
+                callBack.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                Log.d("onSuccess","---Success---");
+                callBack.onSuccess(result);
+            }
+        });
     }
-    return url;
-  }
+
+    public void getRequest(Context context, final HttpCallBack callback) {
+        SharedPreferences sp = context.getSharedPreferences("sp_xixienglish", MODE_PRIVATE);
+        String token = sp.getString("token", "");
+        // 请求url = baseurl + 相对路径 + 参数
+        String url = getAppendUrl(requestUrl, mParams);
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("token", token)
+                .get()              // 请求方法是get
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String code = jsonObject.getString("code");
+                    callback.onSuccess(jsonObject.getString("data"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
+
+    private String getAppendUrl(String url, Map<String, Object> map) {
+        if (map != null && !map.isEmpty()) {
+            StringBuffer buffer = new StringBuffer();
+            Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, Object> entry = iterator.next();
+                if (StringUtils.isEmpty(buffer.toString())) {
+                    buffer.append("?");
+                } else {
+                    buffer.append("&");
+                }
+                buffer.append(entry.getKey()).append("=").append(entry.getValue());
+            }
+            url += buffer.toString();
+        }
+        return url;
+    }
 }
