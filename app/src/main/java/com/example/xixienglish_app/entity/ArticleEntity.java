@@ -14,11 +14,11 @@ public class ArticleEntity {
   /**
    * 文章摘要
    */
-  private String summary = "后端虽然不需要返content，但是需要返summary啊。做前端提要求可太舒服了";
+  private String summary = "";
   /**
    * 阅读量
    */
-  private String read = "123";
+  private String read = "12";
   /**
    * 文章主键
    */

@@ -7,29 +7,18 @@
     android:orientation="vertical"
     tools:context=".activity.VideoDetailActivity">
 
-    <LinearLayout
+    <com.xuexiang.xui.widget.actionbar.TitleBar
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="0.7"
-        android:background="#C4CDE0"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="28dp"
-            android:layout_height="match_parent"
-            android:onClick="onBackClick"
-            android:src="@drawable/icon_back2" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:text="back"
-            android:textColor="#454545"
-            android:textSize="18dp" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:tb_useThemeColor="false"
+        app:tb_barHeight="45dp"
+        app:tb_leftImageResource="@drawable/icon_back_white"
+        app:tb_leftText="回退"
+        app:tb_sideTextPadding="20dp"
+        app:tb_actionPadding="20dp"
+        app:tb_titleText="视频详情"
+        android:onClick="onBackClick" />
 
     <com.dueeeke.videoplayer.player.VideoView
         android:id="@+id/player"
