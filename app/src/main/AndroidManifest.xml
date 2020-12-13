@@ -16,14 +16,14 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Xixienglishapp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ModifyInformationActivity"></activity>
+        <activity android:name=".activity.ModifyInformationActivity" />
         <activity android:name=".activity.InformationActivity" />
         <activity android:name=".activity.MyCourseActivity" />
         <activity android:name=".activity.WordBookActivity" />
@@ -51,7 +51,8 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.LoginEmailActivity" />
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.InitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
