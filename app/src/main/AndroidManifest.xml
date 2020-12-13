@@ -23,7 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Xixienglishapp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.MyCourseActivity"></activity>
+        <activity android:name=".activity.ModifyInformationActivity"></activity>
+        <activity android:name=".activity.InformationActivity" />
+        <activity android:name=".activity.MyCourseActivity" />
         <activity android:name=".activity.WordBookActivity" />
         <activity android:name=".activity.CollectionDetailActivity" />
         <activity android:name=".activity.ThumbsupDetailActivity" />
