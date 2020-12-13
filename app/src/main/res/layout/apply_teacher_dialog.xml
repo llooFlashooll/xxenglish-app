@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/apply_teacher_dialog"
+    android:layout_width="360dp"
+    android:layout_height="250dp"
+    android:background="@drawable/linearlayout_border"
+    android:minWidth="200dp"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:paddingBottom="30dp"
+    android:paddingTop="30dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:text="填写详细信息">
+    </TextView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:tint="?attr/colorAccent"
+            app:srcCompat="@drawable/ic_phone" />
+
+        <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
+            android:id="@+id/et_idCardNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:hint="请输入身份证号"
+            app:met_clearButton="true"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelText="身份证号" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:tint="?attr/colorAccent"
+            app:srcCompat="@drawable/ic_baseline_policy_24" />
+
+        <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
+            android:id="@+id/et_realName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:hint="请输入真实姓名"
+            app:met_clearButton="true"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelText="姓名"
+            />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:tint="?attr/colorAccent"
+            app:srcCompat="@drawable/ic_baseline_supervisor_account_24" />
+
+        <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
+            android:id="@+id/et_teacherCardNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:hint="请输入教师工号"
+            app:met_clearButton="true"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelText="教师工号"
+            />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <com.xuexiang.xui.widget.textview.supertextview.SuperButton
+            android:id="@+id/btn_cancel"
+            style="@style/SuperButton.Primary.Login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="取消" />
+        <com.xuexiang.xui.widget.textview.supertextview.SuperButton
+            android:id="@+id/btn_submit"
+            style="@style/SuperButton.Primary.Login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="提交申请" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

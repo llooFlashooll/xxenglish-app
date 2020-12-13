@@ -27,6 +27,7 @@
             android:id="@+id/btn_delete"
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:layout_weight="0"
             android:background="@drawable/ic_baseline_cancel_24"
             android:backgroundTint="@color/colorPrimary"></Button>
 
@@ -34,8 +35,8 @@
             android:id="@+id/english"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="60dp"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
             android:text="business"
             android:textColor="#000000"
             android:textSize="16dp" />
@@ -44,6 +45,7 @@
             android:id="@+id/chinese"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="商业"
             android:textSize="16dp" />
 

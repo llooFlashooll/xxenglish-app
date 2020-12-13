@@ -2,7 +2,9 @@ package com.example.xixienglish_app.fragment;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,16 +19,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.activity.CollectionDetailActivity;
+import com.example.xixienglish_app.activity.InformationActivity;
 import com.example.xixienglish_app.activity.LoginActivity;
 import com.example.xixienglish_app.activity.MainActivity;
 import com.example.xixienglish_app.activity.MyCourseActivity;
 import com.example.xixienglish_app.activity.ThumbsupDetailActivity;
 import com.example.xixienglish_app.activity.WordBookActivity;
+import com.example.xixienglish_app.util.ApplyTeacherDialog;
 import com.example.xixienglish_app.util.XToastUtils;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
@@ -103,35 +108,15 @@ public class MyFragment extends BaseFragment {
         tv_applyTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("申请成为老师");
-                DialogLoader.getInstance().showInputDialog(
-                        getContext(),
-                        R.drawable.icon_setting,
-                        "填写详细信息",
-                        "填写申请成为教师的详细信息",
-                        new InputInfo(InputType.TYPE_CLASS_TEXT
-                                | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                                | InputType.TYPE_TEXT_FLAG_CAP_WORDS,
-                                getString(R.string.id_card_number)),
-                        (dialog, input) -> {
-                            XToastUtils.toast(input.toString());
-                        },
-                        "继续",
-                        (dialog, which) -> {
-                            dialog.dismiss();
-                            if (dialog instanceof MaterialDialog) {
-                                XToastUtils.toast("你输入了:" + ((MaterialDialog)dialog).getInputEditText().getText().toString());
-                            }
-                        },
-                        "取消",
-                        null);
+                ApplyTeacherDialog applyTeacherDialog = new ApplyTeacherDialog(getActivity());
+                applyTeacherDialog.show();
             }
         });
 
         tv_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("Chinese here.");
+                navigateTo(InformationActivity.class);
             }
         });
 
