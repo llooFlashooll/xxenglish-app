@@ -33,4 +33,8 @@
     <string name="fake_user_name">wasd003</string>
     <string name="fake_room_name">test_room</string>
 
+    <string name="id_card_number">请输入身份证号</string>
+    <string name="real_name">请输入真实姓名</string>
+    <string name="teacher_card_number">请输入教师工号</string>
+
 </resources>

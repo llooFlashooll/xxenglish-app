@@ -34,6 +34,8 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
     private Context context;
     private List<ArticleEntity> list;
     private BaseFragment parent;
+    // 增加activity，用于绑定 recyclerview 所在的activity，用于页面跳转
+    private BaseActivity parentActivity;
 
   /**
    *
@@ -45,6 +47,12 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
         this.context = context;
         this.list = list;
         this.parent = parent;
+    }
+
+    public ArticleFragmentItemAdapter(Context context, List<ArticleEntity> list, BaseActivity parentActivity){
+        this.context = context;
+        this.list = list;
+        this.parentActivity = parentActivity;
     }
 
     @NonNull

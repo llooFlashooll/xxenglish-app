@@ -34,6 +34,7 @@ import com.example.xixienglish_app.entity.ArticleEntitySet;
 import com.example.xixienglish_app.entity.CommentEntity;
 import com.example.xixienglish_app.entity.LoginResponse;
 import com.example.xixienglish_app.entity.TranslationResponse;
+import com.example.xixienglish_app.entity.TripletEntity;
 import com.example.xixienglish_app.fragment.ArticlePartitionFragment;
 import com.example.xixienglish_app.fragment.CommentFragment;
 import com.example.xixienglish_app.fragment.TripletFragment;
@@ -160,7 +161,7 @@ public class ArticleDetailActivity extends BaseActivity {
                             .setTitleColor(android.R.color.white)
                             .setAction("加入生词本", view -> {
 
-                                addToWordBook();
+                                addToWordBook(english, chinese);
                             })
                             .show();
 
@@ -337,15 +338,43 @@ public class ArticleDetailActivity extends BaseActivity {
     /**
      * 加入生词本逻辑
      */
-    public void addToWordBook() {
+    public void addToWordBook(String englishword, String chineseword) {
         DialogLoader.getInstance().showConfirmDialog(
             mContext,
             "是否确认加入生词本?",
             "是",
             (dialog, which) -> {
                 dialog.dismiss();
-                XToastUtils.toast("已加入生词本！");
-//                showToast("已加入生词本！");
+                HashMap<String, Object> bodyInfo = new HashMap<String, Object> () {{
+                    put("english", englishword);
+                    put("chinese",chineseword);
+                }};
+                System.out.println(bodyInfo);
+                Api.config("/add/glossary", bodyInfo).postRequestWithToken(mActivity, new HttpCallBack() {
+                    @Override
+                    public void onSuccess(String res) {
+//                        showToastSync(res);
+
+                        Gson gson = new Gson();
+                        TripletEntity tripletEntity = gson.fromJson(res, TripletEntity.class);
+                        if (tripletEntity.getCode() == 200) {
+                            Looper.prepare();
+                            XToastUtils.toast(tripletEntity.getMsg());
+                            Looper.loop();
+                        }
+                        else {
+                            Looper.prepare();
+                            XToastUtils.toast(tripletEntity.getMsg());
+                            Looper.loop();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
             },
             "否",
             (dialog, which) -> dialog.dismiss()

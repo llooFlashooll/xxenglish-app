@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +27,11 @@ import com.example.xixienglish_app.activity.MainActivity;
 import com.example.xixienglish_app.activity.MyCourseActivity;
 import com.example.xixienglish_app.activity.ThumbsupDetailActivity;
 import com.example.xixienglish_app.activity.WordBookActivity;
+import com.example.xixienglish_app.util.XToastUtils;
 import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
+import com.xuexiang.xui.widget.dialog.strategy.InputInfo;
 
 public class MyFragment extends BaseFragment {
 
@@ -36,8 +40,8 @@ public class MyFragment extends BaseFragment {
     private Button btn_wordbook;
     private TextView tv_name;
     private TextView tv_applyTeacher;
-    private TextView tv_language;
-    private TextView tv_opinion;
+    private TextView tv_information;
+    private TextView tv_class;
     private TextView tv_rate;
     private TextView tv_share;
     private TextView tv_logout;
@@ -66,8 +70,8 @@ public class MyFragment extends BaseFragment {
             tv_name.setText(getValueFromSp("name"));
         }
         tv_applyTeacher = mRootView.findViewById(R.id.tv_applyTeacher);
-        tv_language = mRootView.findViewById(R.id.tv_language);
-        tv_opinion = mRootView.findViewById(R.id.tv_opinion);
+        tv_information = mRootView.findViewById(R.id.tv_information);
+        tv_class = mRootView.findViewById(R.id.tv_class);
         tv_rate = mRootView.findViewById(R.id.tv_rate);
         tv_share = mRootView.findViewById(R.id.tv_share);
         tv_logout = mRootView.findViewById(R.id.tv_logout);
@@ -100,20 +104,41 @@ public class MyFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 showToast("申请成为老师");
+                DialogLoader.getInstance().showInputDialog(
+                        getContext(),
+                        R.drawable.icon_setting,
+                        "填写详细信息",
+                        "填写申请成为教师的详细信息",
+                        new InputInfo(InputType.TYPE_CLASS_TEXT
+                                | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                                | InputType.TYPE_TEXT_FLAG_CAP_WORDS,
+                                getString(R.string.id_card_number)),
+                        (dialog, input) -> {
+                            XToastUtils.toast(input.toString());
+                        },
+                        "继续",
+                        (dialog, which) -> {
+                            dialog.dismiss();
+                            if (dialog instanceof MaterialDialog) {
+                                XToastUtils.toast("你输入了:" + ((MaterialDialog)dialog).getInputEditText().getText().toString());
+                            }
+                        },
+                        "取消",
+                        null);
             }
         });
 
-        tv_language.setOnClickListener(new View.OnClickListener() {
+        tv_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showToast("Chinese here.");
             }
         });
 
-        tv_opinion.setOnClickListener(new View.OnClickListener() {
+        tv_class.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("Contact xixi team.");
+                navigateTo(MyCourseActivity.class);
             }
         });
 
@@ -121,8 +146,6 @@ public class MyFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 showToast("I think it have to be top rate");
-                // TODO: 暂时用评分按钮作为我的课堂
-                navigateTo(MyCourseActivity.class);
             }
         });
 
