@@ -47,7 +47,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical|center_horizontal">
                 <TextView
-                    android:id="@+id/room_number"
+                    android:id="@+id/room_name"
                     android:text="@string/fake_room_name"
                     android:layout_width="0dp"
                     android:layout_weight="1"

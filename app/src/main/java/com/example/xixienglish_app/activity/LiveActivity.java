@@ -21,6 +21,7 @@ import io.agora.rtc.video.VideoCanvas;
  * 传入该activity的参数解释
  * role: 用户的身份，只有1和2两种可取值，1为主播，2为观众
  * roomNumber: 房间号
+ * roomName: 房间名称
  * userName: 用户名
  * token: 后端传入,用于标识用户角色和权限
  */
@@ -32,7 +33,7 @@ public class LiveActivity extends BaseActivity {
     /**
      * UI控件
      */
-    private TextView roomNumber;
+    private TextView roomName;
     private TextView userName;
     private ImageView switchAudio;
     private ImageView switchVideo;
@@ -97,7 +98,7 @@ public class LiveActivity extends BaseActivity {
     protected void initView() {
         localContainer = findViewById(R.id.local);
         remoteContainer = findViewById(R.id.remote);
-        roomNumber = findViewById(R.id.room_number);
+        roomName = findViewById(R.id.room_name);
         userName = findViewById(R.id.user_name);
         switchAudio = findViewById(R.id.live_btn_mute_audio);
         switchVideo = findViewById(R.id.live_btn_mute_video);
@@ -111,7 +112,7 @@ public class LiveActivity extends BaseActivity {
             checkSelfPermission(REQUESTED_PERMISSIONS[2], PERMISSION_REQ_ID)) {
             initEngineAndJoinChannel();
         }
-        roomNumber.setText(getNavigationParams("roomNumber"));
+        roomName.setText(getNavigationParams("roomName"));
         userName.setText(getNavigationParams("userName"));
     }
 

@@ -106,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     // 取token
-    protected String getValueFromSp(String key) {
+    public String getValueFromSp(String key) {
         SharedPreferences sp = getSharedPreferences("sp_xixienglish", MODE_PRIVATE);
         return sp.getString(key, "");
     }

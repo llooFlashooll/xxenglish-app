@@ -46,6 +46,11 @@ public class CourseEntity {
      */
     private String teacherId;
 
+    /**
+     * 授课教师名称
+     */
+    private String teacherName;
+
     public String getCourseId() {
         return courseId;
     }
@@ -134,10 +139,7 @@ public class CourseEntity {
         this.teacherName = teacherName;
     }
 
-    /**
-     * 授课教师名称
-     */
-    private String teacherName;
+
 
 
 

@@ -40,20 +40,48 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="12dp">
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020-7-6~2020-12-6"
+                    android:gravity="left"
+                    android:id="@+id/date"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:id="@+id/time"
+                    android:text="每周1 13:00~14:30"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:id="@+id/teacher_name"
+                    android:text="教师名称：ylp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1.2"
-                android:layout_height="wrap_content"
-                android:text="2020-7-6~2020-12-6"
-                android:gravity="left"
-                android:id="@+id/date"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:id="@+id/time"
-                android:text="每周1 13:00~14:30"/>
+                android:id="@+id/live"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/colorful_take_class"/>
+                <TextView
+                    android:layout_marginTop="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="进入直播课堂"/>
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

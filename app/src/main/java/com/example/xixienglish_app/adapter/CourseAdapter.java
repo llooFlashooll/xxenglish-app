@@ -14,13 +14,18 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.activity.BaseActivity;
+import com.example.xixienglish_app.activity.LiveActivity;
 import com.example.xixienglish_app.api.Api;
 import com.example.xixienglish_app.api.HttpCallBack;
 import com.example.xixienglish_app.entity.CourseEntity;
 import com.example.xixienglish_app.fragment.BaseFragment;
+import com.example.xixienglish_app.util.IdentityEnum;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * RecyclerView使用样例
@@ -71,8 +76,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     @Override
     public CourseAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (tag == 0)
-            return new CourseAdapter.ViewHolder(LayoutInflater.from(context).inflate(R.layout.course_item,parent,false));
-        return new CourseAdapter.ViewHolder(LayoutInflater.from(context).inflate(R.layout.my_course_item,parent,false));
+            return new CourseAdapter.ViewHolder(LayoutInflater.from(context).inflate(R.layout.course_item, parent, false));
+        return new CourseAdapter.ViewHolder(LayoutInflater.from(context).inflate(R.layout.my_course_item, parent, false));
     }
 
     /**
@@ -87,12 +92,20 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         holder.courseDescription.setText(e.getDescription());
         holder.date.setText(e.getStartDate() + "~" + e.getEndDate());
         holder.time.setText("每周" + e.getWeekday() + " " + e.getStartTime() + "-" + e.getEndTime());
+        holder.teacherName.setText("教师名称: " + e.getTeacherName());
         if (holder.price != null) holder.price.setText("价格: " + e.getPrice());
         if (holder.buy != null) {
             holder.buy.setOnClickListener(v -> {
-                HashMap<String, Object> params = new HashMap<String, Object>(){{put("courseId", e.getCourseId());}};
-                BaseActivity baseActivity = (parentActivity == null ?
-                    (BaseActivity) parentFragment.getActivity() : parentActivity);
+                BaseActivity baseActivity = (BaseActivity) loginVerify().get("baseActivity");
+                // 0. 登陆检查
+                if (!(boolean)loginVerify().get("hasLogin")) {
+                    baseActivity.showToast("请先登录");
+                    return;
+                }
+                HashMap<String, Object> params = new HashMap<String, Object>() {{
+                    put("courseId", e.getCourseId());
+                }};
+
                 Api.config("/order/new", params).getRequest(baseActivity, new HttpCallBack() {
                     @Override
                     public void onSuccess(String res) {
@@ -105,7 +118,52 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                     }
 
                     @Override
-                    public void onFailure(Exception e) { e.printStackTrace();}
+                    public void onFailure(Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            });
+        }
+        if (holder.live != null) {
+            holder.live.setOnClickListener(v -> {
+                BaseActivity baseActivity = (BaseActivity) loginVerify().get("baseActivity");
+                // 0. 登陆检查
+                if (!(boolean)loginVerify().get("hasLogin")) {
+                    baseActivity.showToast("请先登录");
+                    return;
+                }
+                // 1. 获取用户身份
+                Api.config("/personalMessage", new HashMap<>()).getRequest(baseActivity, new HttpCallBack() {
+                    @Override
+                    public void onSuccess(String personalInfoStr) {
+                        JSONObject personalInfo = JSON.parseObject(personalInfoStr);
+                        HashMap<String, Object> httpParams = new HashMap<String, Object>(){{
+                            put("courseId", e.getCourseId());
+                        }};
+                        // 2. 获取直播token
+                        Api.config("/live", httpParams).getRequest(baseActivity, new HttpCallBack() {
+                            @Override
+                            public void onSuccess(String liveStr) {
+                                JSONObject liveInfo = JSON.parseObject(liveStr);
+                                Map<String, String> navigationParams = new HashMap<String, String>() {{
+                                    put("roomName", e.getCourseName());
+                                    put("role", String.valueOf(
+                                        IdentityEnum.getLiveCode(personalInfo.getString("identify"))));
+                                    put("userName", personalInfo.getString("name"));
+                                    put("roomNumber", liveInfo.getString("roomNumber"));
+                                    put("token", liveInfo.getString("token"));
+                                }};
+                                baseActivity.navigateToWithParams(LiveActivity.class, navigationParams);
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) { e.printStackTrace(); }
+                        });
+
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) { e.printStackTrace(); }
                 });
             });
         }
@@ -125,8 +183,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         private TextView date;
         private TextView time;
         private TextView price;
+        private TextView teacherName;
         private LinearLayout buy;
-        public ViewHolder(View v){
+        private LinearLayout live;
+
+        public ViewHolder(View v) {
             super(v);
             courseName = v.findViewById(R.id.course_name);
             courseDescription = v.findViewById(R.id.course_description);
@@ -134,6 +195,18 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             time = v.findViewById(R.id.time);
             price = v.findViewById(R.id.price);
             buy = v.findViewById(R.id.buy);
+            teacherName = v.findViewById(R.id.teacher_name);
+            live = v.findViewById(R.id.live);
         }
+    }
+
+    private Map<String, Object> loginVerify() {
+        Map<String, Object> result = new HashMap<>();
+        BaseActivity baseActivity = (parentActivity == null ?
+            (BaseActivity) parentFragment.getActivity() : parentActivity);
+        result.put("baseActivity", baseActivity);
+        String token = baseActivity.getValueFromSp("token");
+        result.put("hasLogin", token != null && !token.isEmpty());
+        return result;
     }
 }
