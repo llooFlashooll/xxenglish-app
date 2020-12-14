@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -28,8 +29,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -37,6 +41,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,15 +49,19 @@ import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.adapter.DrawerAdapter;
 import com.example.xixienglish_app.adapter.DrawerItem;
 import com.example.xixienglish_app.adapter.SimpleDrawerItemAdapter;
+import com.example.xixienglish_app.api.Api;
 import com.example.xixienglish_app.api.HttpCallBack;
 import com.example.xixienglish_app.entity.InformationEntity;
 import com.example.xixienglish_app.entity.InformationResponse;
 import com.example.xixienglish_app.entity.TranslationResponse;
+import com.example.xixienglish_app.entity.TripletEntity;
 import com.example.xixienglish_app.fragment.ArticleFragment;
 import com.example.xixienglish_app.fragment.ClassFragment;
 import com.example.xixienglish_app.fragment.MyFragment;
 import com.example.xixienglish_app.fragment.VideoFragment;
 import com.example.xixienglish_app.util.PhotoPopupWindow;
+import com.example.xixienglish_app.util.StringUtils;
+import com.example.xixienglish_app.util.XToastUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.xuexiang.xui.utils.ResUtils;
@@ -60,6 +69,7 @@ import com.xuexiang.xui.utils.ThemeUtils;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
 import com.xuexiang.xui.widget.guidview.GuideCaseQueue;
 import com.xuexiang.xui.widget.guidview.GuideCaseView;
+import com.xuexiang.xui.widget.popupwindow.bar.CookieBar;
 import com.yarolegovich.slidingrootnav.SlideGravity;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
@@ -68,7 +78,12 @@ import com.yarolegovich.slidingrootnav.callback.DragStateListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -98,12 +113,52 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
     private static final String IMAGE_FILE_NAME = "icon.jpg";
     private Uri mImageUri;
 
+    // 搜索框，查单词逻辑
+    private SearchView searchView;
+    public static final int TRANS = 0x1;
+    private String english;
+    private String chinese;
+    private Activity mActivity = this;
+
     // 定义侧边栏选项位置
     private static final int POS_ARTICLE = 0;
     private static final int POS_VIDEO = 1;
     private static final int POS_CLASS = 2;
     private static final int POS_HOME = 3;
     private static final int POS_LOGOUT = 4;
+
+    /**
+     * Handler用于获取中英翻译单词
+     */
+    protected Handler handler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case TRANS:
+                    chinese = (String)msg.obj;
+                    /**
+                     * **********       以下接入弹出窗逻辑        **********
+                     */
+                    CookieBar.builder(mActivity)
+                            .setTitle(english)
+                            .setMessage(chinese)
+                            .setDuration(3000)
+                            .setBackgroundColor(R.color.colorPrimaryDark)
+                            .setActionColor(android.R.color.white)
+                            .setTitleColor(android.R.color.white)
+                            .setAction("加入生词本", view -> {
+
+                                addToWordBook(english, chinese);
+                            })
+                            .show();
+
+                    showToast("翻译" + english);
+                    break;
+            }
+        }
+
+    };
+
 
     @Override
     protected int initLayout() {
@@ -126,6 +181,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
 
         // 获取用户名
         initUserName();
+
+        // 获取搜索框
+        searchView = findViewById(R.id.search_view);
     }
 
     @Override
@@ -198,7 +256,29 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
             }
         });
 
+        // 搜索框逻辑
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            // 提交时触发的方法
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(TextUtils.isEmpty(query)) {
+                    showToast("请输入要查找的单词~");
+                }
+                else {
+                    // 翻译
+                    english = query;
+                    getTranslation(query);
 
+                }
+                return false;
+            }
+
+            // 输入时触发的方法
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     @Override
@@ -636,4 +716,157 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
         }
     }
 
+    /**
+     * ************         以下为搜索框查单词逻辑         ************
+     */
+    public void getTranslation(String word) {
+
+        /**
+         * MD5加密
+         */
+        String mix = "20201210000643977" + word + "123456" + "k7nyCImNOwOosUeGvYzU";
+        byte[] md5 = new byte[0];
+        try {
+            md5 = MessageDigest.getInstance("MD5").digest(mix.getBytes());
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        StringBuilder hex = new StringBuilder(md5.length * 2);
+        for (byte b: md5) {
+            if ((b & 0xFF) < 0x10) hex.append("0");
+            hex.append(Integer.toHexString(b & 0xFF));
+        }
+        String sign = hex.toString();
+
+
+        /**
+         * 此处重写回调方法
+         */
+        HttpCallBack callBack = new HttpCallBack() {
+
+            @Override
+            public void onSuccess(String res) {
+                Log.e("onSuccess", res);
+//                showToastSync(res);
+
+                Gson gson = new Gson();
+                TranslationResponse translationResponse = gson.fromJson(res, TranslationResponse.class);
+                // 取出translationResult中的译文
+                String translation = translationResponse.getTrans_result().get(0).getDst();
+                Message msg = handler.obtainMessage();
+                msg.what = TRANS;
+                msg.obj = translation;
+                handler.sendMessage(msg);
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        };
+
+        HashMap<String, Object> hash = new HashMap<>();
+
+        hash.put("q", word);
+        hash.put("from", "en");
+        hash.put("to", "zh");
+        hash.put("appid", "20201210000643977");
+        hash.put("salt", "123456");
+        hash.put("sign", sign);
+
+        OkHttpClient client = new OkHttpClient.Builder().build();
+        String url = "http://api.fanyi.baidu.com/api/trans/vip/translate";
+        String requestUrl = getAppendUrl(url, hash);
+        Request request = new Request.Builder()
+                .url(requestUrl)
+                .get()              // 请求方法是get
+                .build();
+        Call call = client.newCall(request);
+
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callBack.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                Log.d("onSuccess","---Success---");
+                callBack.onSuccess(result);
+            }
+        });
+
+    }
+
+
+    // 拼接url，用于带params发送get请求
+    private String getAppendUrl(String url, Map<String, Object> map) {
+        if (map != null && !map.isEmpty()) {
+            StringBuffer buffer = new StringBuffer();
+            Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, Object> entry = iterator.next();
+                if (StringUtils.isEmpty(buffer.toString())) {
+                    buffer.append("?");
+                } else {
+                    buffer.append("&");
+                }
+                buffer.append(entry.getKey()).append("=").append(entry.getValue());
+            }
+            url += buffer.toString();
+        }
+        return url;
+    }
+
+
+    /**
+     * 加入生词本逻辑
+     */
+    public void addToWordBook(String englishword, String chineseword) {
+        DialogLoader.getInstance().showConfirmDialog(
+                mContext,
+                "是否确认加入生词本?",
+                "是",
+                (dialog, which) -> {
+                    dialog.dismiss();
+                    HashMap<String, Object> bodyInfo = new HashMap<String, Object> () {{
+                        put("english", englishword);
+                        put("chinese",chineseword);
+                    }};
+                    System.out.println(bodyInfo);
+                    Api.config("/add/glossary", bodyInfo).postRequestWithToken(mActivity, new HttpCallBack() {
+                        @Override
+                        public void onSuccess(String res) {
+//                        showToastSync(res);
+
+                            Gson gson = new Gson();
+                            TripletEntity tripletEntity = gson.fromJson(res, TripletEntity.class);
+                            if (tripletEntity.getCode() == 200) {
+                                Looper.prepare();
+                                XToastUtils.toast(tripletEntity.getMsg());
+                                Looper.loop();
+                            }
+                            else {
+                                Looper.prepare();
+                                XToastUtils.toast(tripletEntity.getMsg());
+                                Looper.loop();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+
+                },
+                "否",
+                (dialog, which) -> dialog.dismiss()
+        );
+    }
 }
