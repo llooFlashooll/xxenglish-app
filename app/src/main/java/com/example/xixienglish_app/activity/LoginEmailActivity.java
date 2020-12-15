@@ -198,7 +198,7 @@ public class LoginEmailActivity extends BaseActivity {
                     Log.e("onSuccess", token);
                     // 应用sharedPreference存键值对
                     insertValueToSp("token", token);
-                    navigateToWithFlags(MainActivity.class,
+                    navigateToWithFlags(InitActivity.class,
                             Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     Looper.loop();
                 } else {
