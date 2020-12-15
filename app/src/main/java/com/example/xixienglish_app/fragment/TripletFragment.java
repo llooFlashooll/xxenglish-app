@@ -72,7 +72,7 @@ public class TripletFragment extends BaseFragment {
             put("newsId", newsId);
         }};
 
-        Api.config("/add/favorites", bodyInfo).postRequestWithToken(parentActivity, new HttpCallBack() {
+        Api.config("/reverse/favorites", bodyInfo).postRequestWithToken(parentActivity, new HttpCallBack() {
             @Override
             public void onSuccess(String res) {
 //                showToastSync(res);

@@ -400,7 +400,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.OnItemSe
                         "是",
                         (dialog, which) -> {
                             dialog.dismiss();
-                            finish();
+                            finishAffinity();
                         },
                         "否",
                         (dialog, which) -> dialog.dismiss()

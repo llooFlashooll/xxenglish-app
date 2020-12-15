@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.activity.CollectionDetailActivity;
 import com.example.xixienglish_app.activity.InformationActivity;
+import com.example.xixienglish_app.activity.InitActivity;
 import com.example.xixienglish_app.activity.LoginActivity;
 import com.example.xixienglish_app.activity.MainActivity;
 import com.example.xixienglish_app.activity.MyCourseActivity;
@@ -153,7 +154,7 @@ public class MyFragment extends BaseFragment {
                             showToast("退出登录~");
                             removeValueFromSp("token");
                             removeValueFromSp("name");
-                            navigateTo(MainActivity.class);
+                            navigateTo(InitActivity.class);
                         },
                         "否",
                         (dialog, which) -> dialog.dismiss()
