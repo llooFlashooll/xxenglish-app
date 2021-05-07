@@ -52,7 +52,6 @@ public class InitActivity extends BaseActivity {
     @Override
     protected void initData() {
         HashMap<String, Object> httpParams = new HashMap<>();
-
         // 请求文章的第1页数据
         httpParams.put("pageId", 1);
         Api.config("/noTagNews", httpParams).getRequest(this, new HttpCallBack() {
