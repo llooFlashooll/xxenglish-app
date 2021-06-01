@@ -1,6 +1,9 @@
 package com.example.xixienglish_app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +18,13 @@ import com.alibaba.fastjson.JSON;
 import com.example.xixienglish_app.R;
 import com.example.xixienglish_app.activity.ArticleDetailActivity;
 import com.example.xixienglish_app.activity.BaseActivity;
+import com.example.xixienglish_app.activity.InitActivity;
 import com.example.xixienglish_app.api.Api;
 import com.example.xixienglish_app.api.HttpCallBack;
 import com.example.xixienglish_app.entity.ArticleEntity;
+import com.example.xixienglish_app.entity.LoginResponse;
 import com.example.xixienglish_app.fragment.BaseFragment;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -68,6 +74,7 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
         holder.summary.setText(e.getSummary());
         holder.likes.setText(String.valueOf(e.getLikes()));
         holder.reviewNum.setText(String.valueOf(e.getReviewNum()));
+        holder.deleteBtn.setText("删除这条新闻");
         holder.favorites.setText("收藏: " + e.getFavorites());
         holder.tag.setText(e.getTag());
         Picasso.get().load(e.getImage()).into(holder.image);
@@ -84,6 +91,7 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
                     hash.put("image", specifcArticle.getImage());
                     hash.put("content", specifcArticle.getContent());
                     hash.put("newsId", specifcArticle.getNewsId());
+
                     BaseActivity activity = (BaseActivity) parent.getActivity();
                     activity.navigateToWithParams(ArticleDetailActivity.class, hash);
                 }
@@ -94,6 +102,30 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
                 }
             });
 
+        });
+        holder.deleteBtn.setOnClickListener(v -> {
+            HashMap<String, Object> params = new HashMap<String, Object>() {{
+                put("newsId", e.getNewsId());
+            }};
+            Api.config("/deleteNews", params).postRequestInParams(context, new HttpCallBack() {
+                @Override
+                public void onSuccess(String res) {
+                    Gson gson = new Gson();
+                    LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
+                    String msg = (loginResponse.getCode() == 200 ? "删除成功": "啊欧，后台出现了点问题，删除失败");
+                    Looper.prepare();
+                    parent.showToast(msg);
+                    Looper.loop();
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Looper.prepare();
+                    parent.showToast("服务器超时");
+                    Looper.loop();
+                    e.printStackTrace();
+                }
+            });
         });
     }
 
@@ -108,6 +140,7 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
         private TextView likes;
         private TextView reviewNum;
         private TextView favorites;
+        private TextView deleteBtn;
         private ImageView image;
         private TextView tag;
         private LinearLayout wrapper;
@@ -119,6 +152,15 @@ public class ArticleFragmentItemAdapter extends RecyclerView.Adapter<ArticleFrag
             likes = v.findViewById(R.id.likes);
             reviewNum = v.findViewById(R.id.review_num);
             favorites = v.findViewById(R.id.favorites);
+            deleteBtn = v.findViewById(R.id.delete_btn);
+            if (parent.getValueFromSp("isAdmin") == null || !parent.getValueFromSp("isAdmin").equals("true")) {
+                v.findViewById(R.id.delete_icon).setVisibility(View.INVISIBLE);
+                deleteBtn.setVisibility(View.INVISIBLE);
+            } else {
+                v.findViewById(R.id.delete_icon).setVisibility(View.VISIBLE);
+                deleteBtn.setVisibility(View.VISIBLE);
+            }
+
             image = v.findViewById(R.id.image);
             tag = v.findViewById(R.id.tag);
             wrapper = v.findViewById(R.id.wrapper);

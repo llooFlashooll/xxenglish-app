@@ -1,55 +1,34 @@
 package com.example.xixienglish_app.fragment;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.text.InputType;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.xixienglish_app.R;
+import com.example.xixienglish_app.activity.AllGoalActivity;
 import com.example.xixienglish_app.activity.CollectionDetailActivity;
 import com.example.xixienglish_app.activity.InformationActivity;
 import com.example.xixienglish_app.activity.InitActivity;
 import com.example.xixienglish_app.activity.LoginActivity;
-import com.example.xixienglish_app.activity.MainActivity;
 import com.example.xixienglish_app.activity.MyCourseActivity;
+import com.example.xixienglish_app.activity.MyGoalActivity;
 import com.example.xixienglish_app.activity.ThumbsupDetailActivity;
 import com.example.xixienglish_app.activity.WordBookActivity;
 import com.example.xixienglish_app.util.ApplyTeacherDialog;
-import com.example.xixienglish_app.util.XToastUtils;
-import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
-import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
-import com.xuexiang.xui.widget.dialog.strategy.InputInfo;
 
 public class MyFragment extends BaseFragment {
 
     private Button btn_thumbsup;
     private Button btn_collect;
     private Button btn_wordbook;
-    private TextView tv_name;
+    private TextView tv_account;
     private TextView tv_applyTeacher;
     private TextView tv_information;
     private TextView tv_class;
-    private TextView tv_rate;
-    private TextView tv_share;
+    private TextView tv_allgoals;
+    private TextView tv_mygoal;
     private TextView tv_logout;
 
     @Override
@@ -71,15 +50,16 @@ public class MyFragment extends BaseFragment {
         btn_thumbsup = mRootView.findViewById(R.id.btn_thumbsup);
         btn_collect = mRootView.findViewById(R.id.btn_collect);
         btn_wordbook = mRootView.findViewById(R.id.btn_wordbook);
-        tv_name = mRootView.findViewById(R.id.tv_name);
-        if (!getValueFromSp("name").equals("")) {
-            tv_name.setText(getValueFromSp("name"));
+        tv_account = mRootView.findViewById(R.id.tv_account);
+        String account = getValueFromSp("account");
+        if (account != null && !account.isEmpty()) {
+            tv_account.setText(account);
         }
         tv_applyTeacher = mRootView.findViewById(R.id.tv_applyTeacher);
         tv_information = mRootView.findViewById(R.id.tv_information);
         tv_class = mRootView.findViewById(R.id.tv_class);
-        tv_rate = mRootView.findViewById(R.id.tv_rate);
-        tv_share = mRootView.findViewById(R.id.tv_share);
+        tv_mygoal = mRootView.findViewById(R.id.my_goal);
+        tv_allgoals = mRootView.findViewById(R.id.all_goals);
         tv_logout = mRootView.findViewById(R.id.tv_logout);
     }
 
@@ -128,19 +108,9 @@ public class MyFragment extends BaseFragment {
             }
         });
 
-        tv_rate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showToast("I think it have to be top rate");
-            }
-        });
+        tv_mygoal.setOnClickListener(v -> navigateTo(MyGoalActivity.class));
 
-        tv_share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showToast("Share please");
-            }
-        });
+        tv_allgoals.setOnClickListener(v -> navigateTo(AllGoalActivity.class));
 
         tv_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +124,7 @@ public class MyFragment extends BaseFragment {
                             showToast("退出登录~");
                             removeValueFromSp("token");
                             removeValueFromSp("name");
+                            removeValueFromSp("isAdmin");
                             navigateTo(InitActivity.class);
                         },
                         "否",

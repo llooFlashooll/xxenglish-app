@@ -42,6 +42,7 @@ public class RegisterActivity extends BaseActivity {
     private EditText etAccount;
     private EditText etName;
     private EditText etPassword;
+    private EditText confirmPwd;
     private Button btnRegister;
     private TextView userProtocol;
     private TextView privProtocol;
@@ -58,6 +59,7 @@ public class RegisterActivity extends BaseActivity {
         etAccount = findViewById(R.id.edit_account);
         etName = findViewById(R.id.edit_name);
         etPassword = findViewById(R.id.edit_password);
+        confirmPwd = findViewById(R.id.edit_confirm_password);
         btnRegister = findViewById(R.id.btn_register);
         userProtocol = findViewById(R.id.tv_user_protocol);
         privProtocol = findViewById(R.id.tv_privacy_protocol);
@@ -71,8 +73,8 @@ public class RegisterActivity extends BaseActivity {
                 String account = etAccount.getText().toString().trim();
                 String name = etName.getText().toString().trim();
                 String pwd = etPassword.getText().toString().trim();
-
-                register(account, name, pwd);
+                String confirm = confirmPwd.getText().toString().trim();
+                register(account, name, pwd, confirm);
             }
         });
 
@@ -91,7 +93,7 @@ public class RegisterActivity extends BaseActivity {
         });
     }
 
-    private void register(String account, String name, String pwd) {
+    private void register(String account, String name, String pwd, String confirm) {
         if (StringUtils.isEmpty(account)) {
             showToast("请输入账号");
             return;
@@ -104,6 +106,10 @@ public class RegisterActivity extends BaseActivity {
 
         if (StringUtils.isEmpty(pwd)) {
             showToast("请输入密码");
+            return;
+        }
+        if (!pwd.equals(confirm)) {
+            showToast("请保证输入密码与确认密码一致");
             return;
         }
 

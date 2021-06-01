@@ -108,6 +108,32 @@
 
         </FrameLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:tint="?attr/colorAccent"
+                app:srcCompat="@drawable/ic_password" />
+
+            <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
+                android:id="@+id/edit_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:hint="确认密码"
+                android:inputType="textPassword"
+                app:met_clearButton="false"
+                app:met_errorMessage="@string/tip_verify_password_error"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="确认密码" />
+
+        </FrameLayout>
+
 
     </LinearLayout>
 

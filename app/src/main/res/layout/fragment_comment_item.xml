@@ -37,5 +37,10 @@
       android:layout_marginTop="3dp"
       android:textColor="?attr/xui_config_color_content_text"
       tools:text="从rocketmq topic的创建机制可知，一个topic对应有多个消息队列，那么我们在发送消息时，是如何选择消息队列进行发送的？" />
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="删除该条评论"
+          android:id="@+id/comment_delete_btn"/>
   </LinearLayout>
 </androidx.cardview.widget.CardView>

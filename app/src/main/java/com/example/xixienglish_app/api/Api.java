@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.xixienglish_app.util.StringUtils;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +44,47 @@ public class Api {
         return api;
     }
 
+    /**
+     * mParams写在参数里
+     * @param callBack
+     */
+    public void postRequestInParams(Context context, final HttpCallBack callBack) {
+        String url = getAppendUrl(requestUrl, mParams);
+        RequestBody requestBodyJson =
+            RequestBody.create(MediaType.parse("application/json;charset=utf-8"), new JsonObject().toString());
+        SharedPreferences sp = context.getSharedPreferences("sp_xixienglish", MODE_PRIVATE);
+        String token = sp.getString("token", "");
+        Request request = new Request.Builder()
+            .url(url)
+            .addHeader("contentType", "application/json;charset=UTF-8")
+            .addHeader("token", token)
+            .post(requestBodyJson)
+            .build();
+        // 创建call回调对象
+        final Call call = client.newCall(request);
+        // 发起请求
+        call.enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("onFailure", e.getMessage());
+                callBack.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                callBack.onSuccess(result);
+            }
+        });
+    }
+
+    /**
+     * mParams写在body里
+     * @param callBack
+     */
     public void postRequest(final HttpCallBack callBack){
+
 
         // 将参数转换为json格式
         JSONObject jsonObject = new JSONObject(mParams);

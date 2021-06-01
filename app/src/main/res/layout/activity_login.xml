@@ -85,28 +85,36 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
 
             <com.xuexiang.xui.widget.alpha.XUIAlphaTextView
                 android:id="@+id/tv_other_login"
                 style="@style/TextStyle.Explain"
                 android:clickable="true"
-                android:layout_gravity="start"
-                android:paddingStart="10dp"
                 android:paddingTop="5dp"
-                android:paddingEnd="10dp"
                 android:paddingBottom="5dp"
+                android:layout_gravity="left"
                 android:text="其他登录方式"
+                android:textColor="@color/xui_config_color_primary_text" />
+            <com.xuexiang.xui.widget.alpha.XUIAlphaTextView
+                android:id="@+id/admin_login"
+                style="@style/TextStyle.Explain"
+                android:clickable="true"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_gravity="center"
+                android:text="我是管理员"
                 android:textColor="@color/xui_config_color_primary_text" />
 
             <com.xuexiang.xui.widget.alpha.XUIAlphaTextView
                 android:id="@+id/tv_register"
                 style="@style/TextStyle.Explain"
                 android:clickable="true"
-                android:layout_gravity="end"
-                android:paddingStart="10dp"
                 android:paddingTop="5dp"
-                android:paddingEnd="10dp"
+                android:layout_gravity="right"
                 android:paddingBottom="5dp"
                 android:text="注册"
                 android:textColor="@color/xui_config_color_primary_text" />

@@ -26,6 +26,7 @@ public class LoginActivity extends BaseActivity {
     private Button btnLogin;
     private TextView otherLogin;
     private TextView tvRegister;
+    private TextView adminLogin;
     private TextView userProtocol;
     private TextView privProtocol;
 
@@ -43,6 +44,7 @@ public class LoginActivity extends BaseActivity {
         tvRegister = findViewById(R.id.tv_register);
         userProtocol = findViewById(R.id.tv_user_protocol);
         privProtocol = findViewById(R.id.tv_privacy_protocol);
+        adminLogin = findViewById(R.id.admin_login);
     }
 
     @Override
@@ -83,6 +85,8 @@ public class LoginActivity extends BaseActivity {
                 showToast("隐私政策");
             }
         });
+
+        adminLogin.setOnClickListener(v -> navigateTo(AdminLoginActivity.class));
     }
 
     private void login(String account, String pwd) {
@@ -115,6 +119,8 @@ public class LoginActivity extends BaseActivity {
                     Log.e("onSuccess", token);
                     // 应用sharedPreference存键值对
                     insertValueToSp("token", token);
+                    insertValueToSp("isAdmin", "false");
+                    insertValueToSp("account", account);
                     navigateToWithFlags(InitActivity.class,
                             Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     Looper.loop();

@@ -23,6 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Xixienglishapp"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.MyGoalActivity"></activity>
+        <activity android:name=".activity.AllGoalActivity" />
+        <activity android:name=".activity.AdminLoginActivity" />
         <activity android:name=".activity.ModifyInformationActivity" />
         <activity android:name=".activity.InformationActivity" />
         <activity android:name=".activity.MyCourseActivity" />
@@ -41,13 +44,11 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
-        </provider>
-
-        <!--configChanges的作用为避免横屏导致activity重建-->
+        </provider> <!-- configChanges的作用为避免横屏导致activity重建 -->
         <activity
             android:name=".activity.VideoDetailActivity"
-            android:label="@string/title_activity_video"
             android:configChanges="screenSize|keyboardHidden|orientation"
+            android:label="@string/title_activity_video"
             android:theme="@style/Theme.Xixienglishapp.NoActionBar" />
         <activity android:name=".activity.ArticleDetailActivity" />
         <activity android:name=".activity.LoginActivity" />
@@ -58,6 +59,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

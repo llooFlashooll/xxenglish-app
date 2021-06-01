@@ -1,9 +1,12 @@
 package com.example.xixienglish_app.adapter;
 
 import android.content.Context;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,9 +19,13 @@ import com.example.xixienglish_app.activity.ArticleDetailActivity;
 import com.example.xixienglish_app.activity.BaseActivity;
 import com.example.xixienglish_app.activity.CommentDetailActivity;
 import com.example.xixienglish_app.activity.InputNCommentActivity;
+import com.example.xixienglish_app.api.Api;
+import com.example.xixienglish_app.api.HttpCallBack;
 import com.example.xixienglish_app.entity.ArticleEntity;
 import com.example.xixienglish_app.entity.CommentEntity;
+import com.example.xixienglish_app.entity.LoginResponse;
 import com.example.xixienglish_app.fragment.BaseFragment;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -71,6 +78,29 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.
         baseActivity.navigateToWithParams(InputNCommentActivity.class, params);
         return false;
     });
+    holder.deleteBtn.setOnClickListener(v -> {
+        HashMap<String, Object> params = new HashMap<String, Object>(){{
+            put("reviewId", e.getRootReviewId());
+        }};
+        Api.config("/deleteReview", params).postRequestInParams(context, new HttpCallBack() {
+            @Override
+            public void onSuccess(String res) {
+                Gson gson = new Gson();
+                LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
+                String msg = (loginResponse.getCode() == 200 ? "删除成功": "啊欧，后台出现了点问题，删除失败");
+                Looper.prepare();
+                parent.showToast(msg);
+                Looper.loop();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Looper.prepare();
+                parent.showToast("服务器超时");
+                Looper.loop();
+            }
+        });
+    });
   }
 
   @Override
@@ -82,11 +112,17 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.
     private TextView username;
     private TextView commentContent;
     private LinearLayout wrapper;
+    private Button deleteBtn;
     public ViewHolder(View v){
       super(v);
       username = v.findViewById(R.id.username);
       commentContent = v.findViewById(R.id.comment_content);
       wrapper = v.findViewById(R.id.wrapper);
+      deleteBtn = v.findViewById(R.id.comment_delete_btn);
+      if (parent.getValueFromSp("isAdmin") == null ||
+          !parent.getValueFromSp("isAdmin").equals("true"))
+          deleteBtn.setVisibility(View.INVISIBLE);
+      else deleteBtn.setVisibility(View.VISIBLE);
     }
   }
 }
