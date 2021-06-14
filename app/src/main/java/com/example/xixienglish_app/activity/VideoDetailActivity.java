@@ -47,6 +47,9 @@ public class VideoDetailActivity extends BaseActivity {
             .add(R.id.comment_fragment, commentFragment)
             .commit();
 
+        // 阅读数量增加
+        plusCnt("listening");
+
         videoView.setUrl(getNavigationParams("content"));
         videoView.start();
     }

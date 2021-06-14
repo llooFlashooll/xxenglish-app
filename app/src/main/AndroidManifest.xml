@@ -23,7 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Xixienglishapp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.MyGoalActivity"></activity>
+        <activity android:name=".activity.WordbookDetailActivity"></activity>
+        <activity android:name=".activity.MyGoalActivity" />
         <activity android:name=".activity.AllGoalActivity" />
         <activity android:name=".activity.AdminLoginActivity" />
         <activity android:name=".activity.ModifyInformationActivity" />

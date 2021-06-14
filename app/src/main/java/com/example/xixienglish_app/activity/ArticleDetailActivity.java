@@ -117,6 +117,8 @@ public class ArticleDetailActivity extends BaseActivity {
             .add(R.id.triplet_fragment, tripletFragment)
             .add(R.id.comment_fragment, commentFragment)
             .commit();
+        // 阅读数量增加
+        plusCnt("reading");
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.xixienglish_app.fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.xixienglish_app.R;
@@ -20,9 +21,9 @@ import com.xuexiang.xui.widget.dialog.DialogLoader;
 
 public class MyFragment extends BaseFragment {
 
-    private Button btn_thumbsup;
-    private Button btn_collect;
-    private Button btn_wordbook;
+    private LinearLayout btn_thumbsup;
+    private LinearLayout btn_collect;
+    private LinearLayout btn_wordbook;
     private TextView tv_account;
     private TextView tv_applyTeacher;
     private TextView tv_information;

@@ -120,4 +120,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         editor.remove(key);
         editor.commit();
     }
+
+    /**
+     * 学习目标数量++
+     * @param type: reading/listening/word
+     */
+    protected void plusCnt(String type) {
+        // 阅读数量增加
+        String cnt = getValueFromSp(type);
+        if (cnt == null || cnt.isEmpty())
+            insertValueToSp(type, "1");
+        else
+            insertValueToSp(type, Integer.toString((Integer.parseInt(cnt) + 1)));
+    }
 }

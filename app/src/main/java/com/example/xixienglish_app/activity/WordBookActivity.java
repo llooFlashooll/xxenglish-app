@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.example.xixienglish_app.R;
@@ -27,6 +28,7 @@ public class WordBookActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private List<WordbookEntity> wordbookEntityList;
     private BaseActivity thisActivity = this;
+    private ImageView cardBtn;
     private static final int SET_ADAPTER = 0X1;
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
@@ -49,10 +51,14 @@ public class WordBookActivity extends BaseActivity {
     @Override
     protected void initView() {
         recyclerView = findViewById(R.id.rv);
+        cardBtn = findViewById(R.id.card_btn);
     }
 
     @Override
     protected void initData() {
+        cardBtn.setOnClickListener(v -> {
+            navigateTo(WordbookDetailActivity.class);
+        });
         Api.config("/require/glossary", new HashMap<>()).getRequest(thisActivity, new HttpCallBack() {
             @Override
             public void onSuccess(String res) {

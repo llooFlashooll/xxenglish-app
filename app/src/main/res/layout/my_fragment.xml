@@ -115,10 +115,11 @@
                             android:gravity="center"
                             android:layout_weight="0.5"
                             android:orientation="vertical"
+                            android:id="@+id/btn_thumbsup"
                             >
 
                             <Button
-                                android:id="@+id/btn_thumbsup"
+
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:background="@drawable/ic_baseline_favorite_24"
@@ -146,10 +147,11 @@
                             android:layout_weight="0.5"
                             android:gravity="center"
                             android:orientation="vertical"
+                            android:id="@+id/btn_collect"
                             >
 
                             <Button
-                                android:id="@+id/btn_collect"
+
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:background="@drawable/ic_baseline_bookmarks_24"
@@ -178,10 +180,11 @@
                             android:layout_weight="0.5"
                             android:gravity="center"
                             android:orientation="vertical"
+                            android:id="@+id/btn_wordbook"
                             >
 
                             <Button
-                                android:id="@+id/btn_wordbook"
+
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:background="@drawable/ic_baseline_collections_bookmark_24"
